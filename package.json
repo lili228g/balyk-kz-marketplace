@@ -1,0 +1,24 @@
+{
+  "name": "balyk-kz-marketplace",
+  "version": "1.0.0",
+  "description": "Modern seafood marketplace prototype with PostgreSQL schema.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "keywords": [
+    "seafood",
+    "marketplace",
+    "postgresql",
+    "node"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
