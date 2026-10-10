@@ -1,25 +1,55 @@
 const images = {
-  ikra: "https://images.unsplash.com/photo-1604908554027-28331318ab4d?auto=format&fit=crop&w=900&q=80",
-  salmon: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=80",
-  fish: "https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?auto=format&fit=crop&w=900&q=80",
-  shrimp: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=900&q=80",
-  snack: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+  ikra: "./images/pink-salmon-caviar.jpg",
+  heroIkra: "./images/pink-salmon-caviar-500g-customer.png?v=20261009-photo4",
+  ikra250g: "./images/pink-salmon-caviar-250g-customer.png?v=20261009-photo5",
+  smokedSalmonProduct: "./images/salmon-smoked-cut-customer.png?v=20261009-photo6",
+  escolarProduct: "./images/escolar-smoked-pack-customer.png?v=20261009-photo7",
+  smokedSalmonSlab: "./images/salmon-smoked-slab-customer.png?v=20261009-photo8",
+  eliteShrimp: "./images/elite-shrimp-customer-20261010.png?v=20261010-photo1",
+  salmon: "./images/salmon-fillet.jpg",
+  smokedSalmon: "./images/smoked-salmon.jpg",
+  fish: "./images/white-fish.jpg",
+  seabassGutted: "./images/seabass-gutted.jpg",
+  tuna: "./images/tuna.jpg",
+  shrimp: "./images/shrimp.jpg",
+  squid: "./images/squid.jpg",
+  snack: "./images/dried-seafood.jpg",
+  market: "./images/seafood-market.jpg"
 };
 
 const fallbackProducts = [
-  [1, "Икра горбуши 0.5 кг", "Икра", 35000, "упаковка 500 г", 500, "Хит", images.ikra],
-  [2, "Икра горбуши 250 г", "Икра", 17500, "банка 250 г", 250, "Популярно", images.ikra],
-  [3, "Сёмга Х/К", "Рыба холодного копчения", 9500, "за кг", 100, "Копчение", images.salmon],
-  [4, "Эсколар Х/К", "Рыба холодного копчения", 7800, "за кг", 100, "Нежный вкус", images.fish],
-  [5, "Форель слабосолёная", "Слабосолёная рыба", 9000, "за кг", 100, "Пласт", images.salmon],
-  [6, "Сёмга стейки", "Свежемороженая рыба", 6200, "за кг", 100, "Стейки", images.salmon],
-  [7, "Филе судака", "Свежемороженая рыба", 5000, "за кг", 100, "Филе", images.fish],
-  [8, "Тунец филе", "Свежемороженая рыба", 5200, "за кг", 50, "Порционно", images.fish],
-  [9, "Сибас", "Свежемороженая рыба", 7200, "упаковка 1 кг", 1000, "1 кг", images.fish],
-  [10, "Креветки Elit", "Морепродукты", 6500, "упаковка 1 кг", 1000, "16/20", images.shrimp],
-  [11, "Филе кальмара", "Морепродукты", 5000, "упаковка 1 кг", 1000, "Amiko", images.fish],
-  [12, "Пивной набор", "Закуски", 5000, "за кг", 100, "Закуска", images.snack]
-].map(([id, name, category, price, unit, weightStep, badge, imageUrl]) => ({ id, name, category, price, unit, weightStep, badge, imageUrl, description: `${name}. Качественный продукт для домашнего стола.`, details: "Подробности о составе, фасовке и способе приготовления уточняйте при оформлении заказа." }));
+  { id: 1, name: "Икра горбуши 0.5 кг", category: "Икра", price: 35000, unit: "упаковка 500 г", weightStep: 500, badge: "Хит", imageUrl: images.heroIkra, description: "Зернистая икра горбуши дальневосточного вылова.", details: "Упаковка 500 г." },
+  { id: 2, name: "Икра горбуши 250 г", category: "Икра", price: 17500, unit: "банка 250 г", weightStep: 250, badge: "Популярно", imageUrl: images.ikra250g, description: "Зернистая икра горбуши дальневосточного вылова.", details: "Банка 250 г." },
+  { id: 3, name: "Сёмга Х/К", category: "Рыба холодного копчения", price: 12450, unit: "упаковка 0,6–1,3 кг", weightStep: 1300, badge: "Копчение", imageUrl: images.smokedSalmonProduct, description: "Сёмга холодного копчения. Фасовка 0,6–1,3 кг.", details: "9 500 ₸/кг. Ориентир за упаковку — 12 450 ₸; итог зависит от фактического веса." },
+  { id: 4, name: "Эсколар Х/К", category: "Рыба холодного копчения", price: 9360, unit: "упаковка 0,6–1,2 кг", weightStep: 1200, badge: "Копчение", imageUrl: images.escolarProduct, description: "Эсколар холодного копчения. Фасовка 0,6–1,2 кг.", details: "7 800 ₸/кг. Ориентир за упаковку — 9 360 ₸; итог зависит от фактического веса." },
+  { id: 5, name: "Сёмга Х/К пласт", category: "Рыба холодного копчения", price: 28200, unit: "пласт 2,5–3,2 кг", weightStep: 3100, badge: "Пласт", imageUrl: images.smokedSalmonSlab, description: "Половина сёмги холодного копчения.", details: "9 100 ₸/кг. Ориентировочный вес 2,5–3,2 кг, цена указана за пласт." },
+  { id: 6, name: "Форель слабосолёная", category: "Рыба слабосолёная", price: 25200, unit: "пласт 2,2–2,8 кг", weightStep: 2800, badge: "Слабосолёная", imageUrl: "./images/trout-lightly-salted-customer.png?v=20261009-photo9", description: "Половина слабосолёной форели.", details: "9 000 ₸/кг. Ориентировочный вес пласта 2,2–2,8 кг." },
+  { id: 7, name: "Эсколар Х/К пласт", category: "Рыба холодного копчения", price: 38000, unit: "пласт 3–5 кг", weightStep: 5000, badge: "Пласт", imageUrl: "./images/escolar-smoked-slab-customer.png?v=20261010-photo1", description: "Пласт эсколара холодного копчения.", details: "7 600 ₸/кг. Вес пласта 3–5 кг, ориентировочная стоимость — 38 000 ₸." },
+  { id: 8, name: "Угорь горячего копчения", category: "Рыба горячего копчения", price: 7400, unit: "упаковка от 1 кг", weightStep: 1200, badge: "Горячее копчение", imageUrl: "./images/eel-hot-smoked-customer-20261009.png?v=20261009-photo12", description: "Угорь горячего копчения в вакуумной упаковке.", details: "6 200 ₸/кг. Вес упаковки — от 1 кг; стоимость уточняется по весу." },
+  { id: 9, name: "Пивной набор", category: "Закуски", price: 4800, unit: "упаковка 0,8–1,2 кг", weightStep: 1200, badge: "Закуска", imageUrl: "./images/beer-snack-customer-20261009.png?v=20261009-photo13", description: "Готовый набор рыбных закусок.", details: "4 000 ₸/кг. Вес упаковки 0,8–1,2 кг, ориентир — 4 800 ₸." },
+  { id: 10, name: "Сёмга стейки", category: "Свежемороженая рыба", price: 35300, unit: "рыба 5–5,7 кг", weightStep: 5700, badge: "Стейки", imageUrl: "./images/salmon-steaks-customer-20261009.png?v=20261009-photo14", description: "Свежемороженая сёмга, нарезанная стейками.", details: "6 200 ₸/кг. Одна рыба весит примерно 5–5,7 кг." },
+  { id: 11, name: "Сёмга пласт", category: "Свежемороженая рыба", price: 19000, unit: "пласт 2,5–3,2 кг", weightStep: 3100, badge: "Пласт", imageUrl: "./images/salmon-half-customer-20261009.png?v=20261009-photo15", description: "Половина свежемороженой сёмги.", details: "6 100 ₸/кг. Ориентировочный вес пласта 2,5–3,2 кг." },
+  { id: 12, name: "Сёмга размер 5–6 кг", category: "Свежемороженая рыба", price: 34200, unit: "рыба 5–6 кг", weightStep: 5700, badge: "Целая рыба", imageUrl: "./images/salmon-size-5-6-customer-20261009.png?v=20261009-photo16", description: "Целая свежемороженая сёмга весом 5–6 кг.", details: "6 000 ₸/кг. Ориентировочная стоимость — 34 200 ₸." },
+  { id: 13, name: "Сёмга размер 6–7 кг", category: "Свежемороженая рыба", price: 41500, unit: "рыба 6–7 кг", weightStep: 6800, badge: "Целая рыба", imageUrl: "./images/salmon-size-6-7-customer-20261009.png?v=20261009-photo17", description: "Целая свежемороженая сёмга весом 6–7 кг.", details: "6 100 ₸/кг. Ориентировочная стоимость — 41 500 ₸." },
+  { id: 14, name: "Сёмга размер 7–8 кг", category: "Свежемороженая рыба", price: 49000, unit: "рыба 7–8 кг", weightStep: 7800, badge: "Целая рыба", imageUrl: "./images/salmon-size-7-8-customer-20261009.png?v=20261009-photo18", description: "Целая свежемороженая сёмга весом 7–8 кг.", details: "6 300 ₸/кг. Ориентировочная стоимость — 49 000 ₸." },
+  { id: 15, name: "Форель морская 5–6 кг", category: "Свежемороженая рыба", price: 34000, unit: "рыба 5–6 кг", weightStep: 5700, badge: "Целая рыба", imageUrl: "./images/sea-trout-size-5-6-customer-20261009.png?v=20261009-photo19", description: "Целая свежемороженая морская форель.", details: "6 000 ₸/кг. Вес рыбы 5–6 кг; стоимость ориентировочная." },
+  { id: 16, name: "Форель целая", category: "Свежемороженая рыба", price: 21600, unit: "рыба 2,7–3,6 кг", weightStep: 3600, badge: "Целая рыба", imageUrl: "./images/trout-whole-customer-20261009.png?v=20261009-photo20", description: "Целая свежемороженая форель.", details: "6 000 ₸/кг. Вес рыбы 2,7–3,6 кг; ориентир — 21 600 ₸." },
+  { id: 17, name: "Форель пласт", category: "Свежемороженая рыба", price: 11700, unit: "пласт 1,4–1,9 кг", weightStep: 1900, badge: "Пласт", imageUrl: "./images/trout-half-customer-20261009.png?v=20261009-photo21", description: "Половина свежемороженой морской форели.", details: "6 150 ₸/кг. Вес пласта около 1,4–1,9 кг." },
+  { id: 18, name: "Филе судака без глазури", category: "Свежемороженая рыба", price: 9000, unit: "упаковка 1,5–2 кг", weightStep: 2000, badge: "Без глазури", imageUrl: "./images/zander-fillet-un-glazed-customer-20261009.png?v=20261009-photo23", description: "Свежемороженое филе судака без глазури.", details: "4 500 ₸/кг. Минимальная фасовка 1,5–2 кг; ориентир — 9 000 ₸." },
+  { id: 19, name: "Филе судака", category: "Свежемороженая рыба", price: 6200, unit: "упаковка 1,5–2 кг", weightStep: 2000, badge: "В глазури", imageUrl: "./images/zander-fillet-glazed-customer-20261009.png?v=20261009-photo22", description: "Свежемороженое филе судака в глазури.", details: "3 100 ₸/кг. Фасовка 1,5–2 кг; ориентир — 6 200 ₸." },
+  { id: 20, name: "Тунец филе", category: "Свежемороженая рыба", price: 2600, unit: "упаковка 500 г", weightStep: 500, badge: "Порционно", imageUrl: "./images/tuna-fillet-customer-20261010.png?v=20261010-photo1", description: "Свежемороженое филе тунца, стейки по 50–100 г.", details: "5 200 ₸/кг. Упаковка 500 г — 2 600 ₸." },
+  { id: 21, name: "Сибас развесной", category: "Свежемороженая рыба", price: 8400, unit: "упаковка 1–1,2 кг", weightStep: 1200, badge: "Развесной", imageUrl: "./images/seabass-by-weight-customer-20261010.png?v=20261010-photo1", description: "Потрошёный свежемороженый сибас, рыба 300–400 г.", details: "7 000 ₸/кг. Фасовка 1–1,2 кг; ориентир — 8 400 ₸." },
+  { id: 22, name: "Сибас", category: "Свежемороженая рыба", price: 7200, unit: "упаковка 1 кг", weightStep: 1000, badge: "1 кг", imageUrl: "./images/seabass-gutted-customer-20261010.png?v=20261010-photo1", description: "Потрошёный свежемороженый сибас, рыба 330–380 г.", details: "Упаковка 1 кг. Цена — 7 200 ₸." },
+  { id: 23, name: "Форель радужная", category: "Свежемороженая рыба", price: 9000, unit: "упаковка 1–1,8 кг", weightStep: 1800, badge: "Развесная", imageUrl: "./images/rainbow-trout-customer-20261010.png?v=20261010-photo1", description: "Свежемороженая радужная форель, рыба 250–350 г.", details: "5 000 ₸/кг. Фасовка 1–1,8 кг; ориентир — 9 000 ₸." },
+  { id: 24, name: "Окунь морской", category: "Свежемороженая рыба", price: 5950, unit: "упаковка 1,5–1,7 кг", weightStep: 1700, badge: "Развесной", imageUrl: "./images/sea-perch-frozen-fresh-customer-20261010.png?v=20261010-photo4", description: "Свежемороженый морской окунь, рыба 0,5–0,7 кг.", details: "3 500 ₸/кг. Фасовка 1,5–1,7 кг; ориентир — 5 950 ₸." },
+  { id: 25, name: "Креветки Elit", category: "Морепродукты", price: 4500, unit: "упаковка 1 кг", weightStep: 1000, badge: "16/20", imageUrl: images.eliteShrimp, description: "Креветки без головы в панцире, размер 16/20.", details: "Свежемороженые. Упаковка 1 кг — 4 500 ₸." },
+  { id: 26, name: "Филе кальмара", category: "Морепродукты", price: 3000, unit: "упаковка 1 кг", weightStep: 1000, badge: "Amiko", imageUrl: "./images/squid-fillet-customer-20261010.png?v=20261010-photo2", description: "Крупное филе кальмара Amiko.", details: "Упаковка 1 кг — 3 000 ₸." },
+  { id: 27, name: "Креветки очищенные Elit", category: "Морепродукты", price: 5000, unit: "упаковка 1 кг", weightStep: 1000, badge: "Очищенные", imageUrl: "./images/elite-peeled-shrimp-customer-20261010.png?v=20261010-photo1", description: "Очищенные креветки с хвостом, обработанные паром.", details: "Размер 16/20. Упаковка 1 кг — 5 000 ₸." },
+  { id: 28, name: "Дорада развесная", category: "Свежемороженая рыба", price: 8160, unit: "упаковка 1–1,2 кг", weightStep: 1200, badge: "Развесная", imageUrl: "./images/gilthead-bream-by-weight-customer-20261010.png?v=20261010-photo1", description: "Потрошёная свежемороженая дорада, рыба 300–400 г.", details: "6 800 ₸/кг. Фасовка 1–1,2 кг; ориентир — 8 160 ₸." },
+  { id: 29, name: "Форель стейки", category: "Свежемороженая рыба", price: 34000, unit: "рыба 5–5,5 кг", weightStep: 5500, badge: "Стейки", imageUrl: "./images/trout-steaks-customer-20261010.png?v=20261010-photo1", description: "Свежемороженая морская форель, нарезанная стейками.", details: "6 200 ₸/кг. Фасовка — одна рыба весом 5–5,5 кг." },
+  { id: 30, name: "Окунь морской 0,3–0,5 кг", category: "Свежемороженая рыба", price: 5780, unit: "упаковка 1,5–1,7 кг", weightStep: 1650, badge: "Развесной", imageUrl: "./images/sea-perch-small-customer-20261010.png?v=20261010-photo1", description: "Свежемороженый морской окунь, размер рыбы 0,3–0,5 кг.", details: "3 500 ₸/кг. Фасовка 1,5–1,7 кг; ориентир — 5 780 ₸." },
+  { id: 31, name: "Тунец холодного копчения", category: "Рыба холодного копчения", price: 11700, unit: "упаковка 0,6–1,3 кг", weightStep: 1300, badge: "Копчение", imageUrl: "./images/smoked-tuna-customer-20261010.png?v=20261010-photo1", description: "Филе желтопёрого тунца холодного копчения.", details: "9 000 ₸/кг. Фасовка 0,6–1,3 кг; ориентир — 11 700 ₸." }
+];
 
 const translations = {
   ru: { brand: "Балык", tagline: "Интернет магазин морепродуктов", catalog: "Каталог", cart: "Корзина", profile: "Профиль", search: "Поиск: икра, сёмга, креветки...", heroEyebrow: "Балык · свежие поставки по Астане", heroTitle: "Икра, рыба и морепродукты с доставкой утром", heroText: "Работаем с понедельника по субботу с 10:00 до 13:00. Доставка в первой половине дня при заказе от 15 000 ₸.", goCatalog: "Смотреть каталог", goCart: "Перейти в корзину", payTitle: "Оплата при получении", payText: "Наличными при доставке.", deliveryTitle: "Доставка от 15 000 ₸", deliveryText: "По Астане в первой половине дня.", weightTitle: "Цена по весу", weightText: "Расчёт за кг, граммы или упаковку.", catalogEyebrow: "Каталог Балык", catalogTitle: "Выберите свежие продукты", sort: "Сортировка", sortPopular: "Популярное", sortCheap: "Сначала дешевле", sortExpensive: "Сначала дороже", sortName: "По названию", categories: "Категории", schedule: "График", sunday: "Вс - выходной", cartTitle: "Ваш заказ", cartText: "Проверьте товары, затем перейдите к оформлению.", total: "Итого", checkoutBtn: "Оформить заказ", checkout: "Оформление", checkoutTitle: "Куда доставить заказ?", toPay: "К оплате", confirmOrder: "Подтвердить заказ", profileTitle: "Личный кабинет", profileText: "Регистрация, вход, любимые товары и история заказов.", loginRegister: "Вход / регистрация", register: "Регистрация", login: "Войти", saveProfile: "Сохранить профиль", passwordHint: "Минимум 8 символов: заглавная буква, строчная буква и цифра.", orders: "Мои заказы", nameLabel: "Имя", phoneLabel: "Телефон", passwordLabel: "Пароль", addressLabel: "Адрес", commentLabel: "Комментарий", details: "Подробнее", buy: "В корзину", empty: "Корзина пока пустая. Добавьте товары из каталога.", noResults: "Ничего не найдено." },
@@ -29,7 +59,7 @@ const translations = {
 
 const catalogTranslations = {
   en: {
-    categories: { "Икра": "Caviar", "Рыба холодного копчения": "Cold-smoked fish", "Слабосолёная рыба": "Lightly salted fish", "Свежемороженая рыба": "Frozen fish", "Морепродукты": "Seafood", "Закуски": "Snacks" },
+    categories: { "Икра": "Caviar", "Рыба холодного копчения": "Cold-smoked fish", "Рыба горячего копчения": "Hot-smoked fish", "Рыба слабосолёная": "Lightly salted fish", "Слабосолёная рыба": "Lightly salted fish", "Свежемороженая рыба": "Frozen fish", "Морепродукты": "Seafood", "Закуски": "Snacks" },
     products: {
       "Икра горбуши 0.5 кг": ["Pink salmon caviar 0.5 kg", "Premium grainy pink salmon caviar for a festive table.", "500 g package. Rich taste, firm grains and careful packaging."],
       "Икра горбуши 250 г": ["Pink salmon caviar 250 g", "Premium caviar in a convenient home-size jar.", "250 g jar, ideal for breakfasts and snacks."],
@@ -42,11 +72,31 @@ const catalogTranslations = {
       "Сибас": ["Sea bass", "Gutted sea bass, 300-400 g fish in a package.", "Perfect for baking whole with lemon and herbs."],
       "Креветки Elit": ["Elit shrimp", "Headless shell-on shrimp, size 16/20.", "For pasta, grilling, salads and snacks."],
       "Филе кальмара": ["Squid fillet", "Large squid fillet in a 1 kg package.", "For salads, frying, stuffing and Asian dishes."],
-      "Пивной набор": ["Beer snack set", "A ready snack set packed from 0.8 to 1.2 kg.", "A convenient choice for evenings, guests and quick snacks."]
+      "Пивной набор": ["Beer snack set", "A ready snack set packed from 0.8 to 1.2 kg.", "A convenient choice for evenings, guests and quick snacks."],
+      "Сёмга Х/К пласт": ["Cold-smoked salmon half", "Cold-smoked salmon, sold as a half fillet.", "Approx. 2.5–3.2 kg at 9,100 ₸/kg; final amount depends on actual weight."],
+      "Эсколар Х/К пласт": ["Cold-smoked escolar half", "A larger half fillet of cold-smoked escolar.", "Approx. 3–5 kg at 7,600 ₸/kg; final amount depends on actual weight."],
+      "Угорь горячего копчения": ["Hot-smoked eel", "Hot-smoked eel in vacuum packaging.", "From 1 kg at 6,200 ₸/kg; final amount depends on actual weight."],
+      "Сёмга пласт": ["Salmon half", "A half fillet of frozen salmon.", "Approx. 2.5–3.2 kg at 6,100 ₸/kg."],
+      "Сёмга размер 5–6 кг": ["Salmon 5–6 kg", "Whole frozen salmon, size 5–6 kg.", "6,000 ₸/kg; displayed package price is approximate."],
+      "Сёмга размер 6–7 кг": ["Salmon 6–7 kg", "Whole frozen salmon, size 6–7 kg.", "6,100 ₸/kg; displayed package price is approximate."],
+      "Сёмга размер 7–8 кг": ["Salmon 7–8 kg", "Whole frozen salmon, size 7–8 kg.", "6,300 ₸/kg; displayed package price is approximate."],
+      "Форель морская 5–6 кг": ["Sea trout 5–6 kg", "Whole frozen sea trout, size 5–6 kg.", "6,000 ₸/kg; displayed package price is approximate."],
+      "Форель целая": ["Whole trout", "Whole frozen trout, approx. 2.7–3.6 kg.", "6,000 ₸/kg; displayed package price is approximate."],
+      "Форель пласт": ["Trout half", "A half fillet of frozen sea trout, approx. 1.4–1.9 kg.", "6,150 ₸/kg; displayed package price is approximate."],
+      "Филе судака без глазури": ["Un-glazed pike-perch fillet", "Frozen pike-perch fillet without glaze.", "4,500 ₸/kg; packed from 1.5 to 2 kg."],
+      "Филе судака": ["Glazed pike-perch fillet", "Frozen pike-perch fillet with glaze.", "3,100 ₸/kg; packed from 1.5 to 2 kg."],
+      "Сибас развесной": ["Sea bass by weight", "Gutted frozen sea bass, individual fish 300–400 g.", "7,000 ₸/kg; pack approx. 1–1.2 kg."],
+      "Форель радужная": ["Rainbow trout", "Frozen rainbow trout, individual fish 250–350 g.", "5,000 ₸/kg; packed from 1 to 1.8 kg."],
+      "Окунь морской": ["Sea perch", "Frozen sea perch, individual fish 500–700 g.", "3,500 ₸/kg; packed from 1.5 to 1.7 kg."],
+      "Креветки очищенные Elit": ["Peeled Elit shrimp", "Steam-blanched peeled shrimp with tails, size 16/20.", "1 kg package."],
+      "Дорада развесная": ["Gilthead sea bream by weight", "Gutted frozen sea bream, individual fish 300–400 g.", "6,800 ₸/kg; pack approx. 1–1.2 kg."],
+      "Форель стейки": ["Trout steaks", "Frozen sea trout cut into steaks, approx. 5–5.5 kg per fish.", "6,200 ₸/kg; displayed package price is approximate."],
+      "Окунь морской 0,3–0,5 кг": ["Sea perch 0.3–0.5 kg", "Frozen sea perch, individual fish 300–500 g.", "3,500 ₸/kg; packed from 1.5 to 1.7 kg."],
+      "Тунец холодного копчения": ["Cold-smoked tuna", "Cold-smoked yellowfin tuna fillet.", "9,000 ₸/kg; packed from 0.6 to 1.3 kg."]
     }
   },
   kk: {
-    categories: { "Икра": "Уылдырық", "Рыба холодного копчения": "Суық ысталған балық", "Слабосолёная рыба": "Аз тұздалған балық", "Свежемороженая рыба": "Мұздатылған балық", "Морепродукты": "Теңіз өнімдері", "Закуски": "Тіскебасарлар" },
+    categories: { "Икра": "Уылдырық", "Рыба холодного копчения": "Суық ысталған балық", "Рыба горячего копчения": "Ыстық ысталған балық", "Рыба слабосолёная": "Аз тұздалған балық", "Слабосолёная рыба": "Аз тұздалған балық", "Свежемороженая рыба": "Мұздатылған балық", "Морепродукты": "Теңіз өнімдері", "Закуски": "Тіскебасарлар" },
     products: {
       "Икра горбуши 0.5 кг": ["Қызғылт албырт уылдырығы 0.5 кг", "Мерекелік дастарқанға арналған сапалы түйіршікті уылдырық.", "500 г қаптама. Қанық дәм және тығыз түйіршіктер."],
       "Икра горбуши 250 г": ["Қызғылт албырт уылдырығы 250 г", "Үйге ыңғайлы көлемдегі сапалы уылдырық.", "250 г банка, таңғы ас пен тіскебасарға ыңғайлы."],
@@ -59,14 +109,48 @@ const catalogTranslations = {
       "Сибас": ["Сибас", "Қаптамадағы 300-400 г ішегі тазартылған балық.", "Лимон және шөптермен тұтас пісіруге жақсы."],
       "Креветки Elit": ["Elit асшаяндары", "16/20 өлшемді басы жоқ, қабықтағы асшаяндар.", "Пастаға, грильге, салатқа және тіскебасарға."],
       "Филе кальмара": ["Кальмар филесі", "1 кг қаптамадағы ірі кальмар филесі.", "Салатқа, қуыруға және фарштауға арналған."],
-      "Пивной набор": ["Сыраға арналған жиынтық", "0.8-1.2 кг аралығында дайын тіскебасар жиынтығы.", "Кешке, қонақтарға және жылдам тіскебасарға ыңғайлы."]
+      "Пивной набор": ["Сыраға арналған жиынтық", "0.8-1.2 кг аралығында дайын тіскебасар жиынтығы.", "Кешке, қонақтарға және жылдам тіскебасарға ыңғайлы."],
+      "Сёмга Х/К пласт": ["Суық ысталған албырт бөлігі", "Суық ысталған албырттың жарты бөлігі.", "Шамамен 2.5–3.2 кг, бағасы 9 100 ₸/кг."],
+      "Эсколар Х/К пласт": ["Суық ысталған эсколар бөлігі", "Суық ысталған эсколардың үлкен бөлігі.", "Шамамен 3–5 кг, бағасы 7 600 ₸/кг."],
+      "Угорь горячего копчения": ["Ыстық ысталған жыланбалық", "Вакуум қаптамадағы ыстық ысталған жыланбалық.", "1 кг бастап, бағасы 6 200 ₸/кг."],
+      "Сёмга пласт": ["Албырт бөлігі", "Мұздатылған албырттың жарты бөлігі.", "Шамамен 2.5–3.2 кг, бағасы 6 100 ₸/кг."],
+      "Сёмга размер 5–6 кг": ["Албырт 5–6 кг", "5–6 кг көлеміндегі тұтас мұздатылған албырт.", "Бағасы 6 000 ₸/кг, қаптама құны шамамен көрсетілген."],
+      "Сёмга размер 6–7 кг": ["Албырт 6–7 кг", "6–7 кг көлеміндегі тұтас мұздатылған албырт.", "Бағасы 6 100 ₸/кг, қаптама құны шамамен көрсетілген."],
+      "Сёмга размер 7–8 кг": ["Албырт 7–8 кг", "7–8 кг көлеміндегі тұтас мұздатылған албырт.", "Бағасы 6 300 ₸/кг, қаптама құны шамамен көрсетілген."],
+      "Форель морская 5–6 кг": ["Теңіз форелі 5–6 кг", "5–6 кг тұтас мұздатылған теңіз форелі.", "Бағасы 6 000 ₸/кг, қаптама құны шамамен көрсетілген."],
+      "Форель целая": ["Тұтас форель", "Шамамен 2.7–3.6 кг тұтас мұздатылған форель.", "Бағасы 6 000 ₸/кг."],
+      "Форель пласт": ["Форель бөлігі", "Шамамен 1.4–1.9 кг мұздатылған теңіз форелінің жарты бөлігі.", "Бағасы 6 150 ₸/кг."],
+      "Филе судака без глазури": ["Мұзсыз көксерке филесі", "Мұздатылған, глазурьсіз көксерке филесі.", "Бағасы 4 500 ₸/кг, қаптамасы 1.5–2 кг."],
+      "Филе судака": ["Глазурьлі көксерке филесі", "Глазурьлі мұздатылған көксерке филесі.", "Бағасы 3 100 ₸/кг, қаптамасы 1.5–2 кг."],
+      "Сибас развесной": ["Сибас салмақпен", "Ішек-қарны тазартылған мұздатылған сибас, балығы 300–400 г.", "Бағасы 7 000 ₸/кг, қаптамасы шамамен 1–1.2 кг."],
+      "Форель радужная": ["Кемпірқосақ форелі", "Балығы 250–350 г мұздатылған кемпірқосақ форелі.", "Бағасы 5 000 ₸/кг, қаптамасы 1–1.8 кг."],
+      "Окунь морской": ["Теңіз алабұғасы", "Балығы 500–700 г мұздатылған теңіз алабұғасы.", "Бағасы 3 500 ₸/кг, қаптамасы 1.5–1.7 кг."],
+      "Креветки очищенные Elit": ["Тазартылған Elit асшаяндары", "Құйрығы бар, булап өңделген тазартылған асшаяндар.", "Өлшемі 16/20. Қаптамасы 1 кг."],
+      "Дорада развесная": ["Дорада салмақпен", "Ішек-қарны тазартылған мұздатылған дорада, балығы 300–400 г.", "Бағасы 6 800 ₸/кг, қаптамасы шамамен 1–1.2 кг."],
+      "Форель стейки": ["Форель стейктері", "Шамамен 5–5.5 кг мұздатылған теңіз форелінің стейктері.", "Бағасы 6 200 ₸/кг."],
+      "Окунь морской 0,3–0,5 кг": ["Теңіз алабұғасы 0.3–0.5 кг", "Балығы 300–500 г мұздатылған теңіз алабұғасы.", "Бағасы 3 500 ₸/кг, қаптамасы 1.5–1.7 кг."],
+      "Тунец холодного копчения": ["Суық ысталған тунец", "Суық ысталған сарықанатты тунец филесі.", "Бағасы 9 000 ₸/кг, қаптамасы 0.6–1.3 кг."]
     }
   }
 };
 
 let products = [...fallbackProducts];
 let categories = [];
-const state = { query: "", category: "Все", sort: "popular", lang: localStorage.getItem("balyk-lang") || "ru", cart: JSON.parse(localStorage.getItem("balyk-cart") || "[]"), profile: JSON.parse(localStorage.getItem("balyk-profile") || "null"), views: JSON.parse(localStorage.getItem("balyk-views") || "{}") };
+function fromStorage(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+  } catch {
+    localStorage.removeItem(key);
+    return fallback;
+  }
+}
+function safeImageUrl(value, fallback = images.fish) {
+  const url = String(value || "").trim();
+  if (/^\.\/images\/[-\w./]+\.(?:jpe?g|png)(?:\?v=[\w.-]+)?$/i.test(url) || /^\.\/product-placeholder\.svg$/i.test(url)) return url;
+  return fallback;
+}
+const storedFavorites = fromStorage("balyk-favorites", []);
+const state = { query: "", category: "Все", sort: "popular", lang: localStorage.getItem("balyk-lang") || "ru", cart: fromStorage("balyk-cart", []), profile: fromStorage("balyk-profile", null), views: fromStorage("balyk-views", {}), favorites: Array.isArray(storedFavorites) ? storedFavorites.filter(Number.isSafeInteger) : [], favoritesOnly: false };
 const byId = (id) => document.getElementById(id);
 const t = (key) => translations[state.lang][key] || translations.ru[key] || key;
 const localizedCategory = (category) => category === "Все" ? (state.lang === "en" ? "All" : state.lang === "kk" ? "Барлығы" : "Все") : catalogTranslations[state.lang]?.categories?.[category] || category;
@@ -83,12 +167,51 @@ const priceFor = (product, grams, qty = 1) => product.price * grams / (weighted(
 const measureFor = (product) => weighted(product) ? { label: "Вес", unit: "грамм", step: product.weightStep, value: product.weightStep } : { label: "Количество", unit: product.unit, step: 1, value: 1 };
 const cartMeasure = (product, grams) => weighted(product) ? `${grams} ${state.lang === "en" ? "g" : "г"}` : `${Math.round(grams / product.weightStep)} × ${localizedUnit(product.unit)}`;
 
-function save() { localStorage.setItem("balyk-cart", JSON.stringify(state.cart)); localStorage.setItem("balyk-profile", JSON.stringify(state.profile)); localStorage.setItem("balyk-views", JSON.stringify(state.views)); }
-function normalize(product) { const category = String(product.category || "").toLowerCase(); return { ...product, id: Number(product.id), price: Number(product.price), weightStep: Number(product.weightStep || product.weight_step || 100), imageUrl: product.imageUrl || product.image_url || (category.includes("икра") ? images.ikra : category.includes("мореп") ? images.shrimp : category.includes("закус") ? images.snack : images.fish), description: product.description || "Качественный продукт для домашнего стола.", details: product.details || "Подробности о товаре доступны при оформлении." }; }
-function setView(view) { document.querySelectorAll(".view").forEach((section) => section.classList.toggle("active", section.dataset.view === view)); document.querySelectorAll(".nav-link").forEach((link) => link.classList.toggle("active", link.dataset.viewLink === view)); location.hash = view; renderCart(); renderProfile(); }
+function save() {
+  localStorage.setItem("balyk-cart", JSON.stringify(state.cart));
+  localStorage.setItem("balyk-profile", JSON.stringify(state.profile ? { name: state.profile.name || "Гость" } : null));
+  localStorage.setItem("balyk-views", JSON.stringify(state.views));
+  localStorage.setItem("balyk-favorites", JSON.stringify(state.favorites));
+}
+function normalize(product) {
+  const category = String(product.category || "").toLowerCase();
+  const fallback = category.includes("икра") ? images.ikra : category.includes("мореп") ? images.shrimp : category.includes("закус") ? images.snack : category.includes("копч") ? images.smokedSalmon : images.fish;
+  const suppliedImage = {
+    "Икра горбуши 0.5 кг": images.heroIkra,
+    "Икра горбуши 250 г": images.ikra250g,
+    "Сёмга Х/К": images.smokedSalmonProduct,
+    "Эсколар Х/К": images.escolarProduct,
+    "Сёмга Х/К пласт": images.smokedSalmonSlab,
+    "Сёмга стейки": "./images/salmon-steaks-customer-20261009.png?v=20261009-photo14",
+    "Сёмга пласт": "./images/salmon-half-customer-20261009.png?v=20261009-photo15",
+    "Сёмга размер 5–6 кг": "./images/salmon-size-5-6-customer-20261009.png?v=20261009-photo16",
+    "Сёмга размер 6–7 кг": "./images/salmon-size-6-7-customer-20261009.png?v=20261009-photo17",
+    "Сёмга размер 7–8 кг": "./images/salmon-size-7-8-customer-20261009.png?v=20261009-photo18",
+    "Форель морская 5–6 кг": "./images/sea-trout-size-5-6-customer-20261009.png?v=20261009-photo19",
+    "Форель целая": "./images/trout-whole-customer-20261009.png?v=20261009-photo20",
+    "Форель пласт": "./images/trout-half-customer-20261009.png?v=20261009-photo21",
+    "Филе судака": "./images/zander-fillet-glazed-customer-20261009.png?v=20261009-photo22",
+    "Филе судака без глазури": "./images/zander-fillet-un-glazed-customer-20261009.png?v=20261009-photo23",
+    "Угорь горячего копчения": "./images/eel-hot-smoked-customer-20261009.png?v=20261009-photo12",
+    "Пивной набор": "./images/beer-snack-customer-20261009.png?v=20261009-photo13",
+    "Форель слабосолёная": "./images/trout-lightly-salted-customer.png?v=20261009-photo9",
+    "Эсколар Х/К пласт": "./images/escolar-smoked-slab-customer.png?v=20261010-photo1",
+    "Креветки Elit": images.eliteShrimp
+  }[product.name];
+  return {
+    ...product,
+    id: Number(product.id),
+    price: Number(product.price),
+    weightStep: Number(product.weightStep || product.weight_step || 100),
+    imageUrl: suppliedImage || safeImageUrl(product.imageUrl || product.image_url, fallback),
+    description: product.description || "Качественный продукт для домашнего стола.",
+    details: product.details || "Подробности о товаре доступны при оформлении."
+  };
+}
+function setView(view) { if (view === "admin" && state.profile?.role !== "admin") view = "profile"; document.querySelectorAll(".view").forEach((section) => section.classList.toggle("active", section.dataset.view === view)); document.querySelectorAll(".nav-link").forEach((link) => link.classList.toggle("active", link.dataset.viewLink === view)); location.hash = view; renderCart(); renderProfile(); }
 function refreshCategories() { categories = ["Все", ...new Set(products.map((product) => product.category))]; if (!categories.includes(state.category)) state.category = "Все"; }
-function filteredProducts() { const query = state.query.trim().toLowerCase(); return products.filter((product) => { const view = localizedProduct(product); return (state.category === "Все" || product.category === state.category) && (!query || `${view.name} ${view.category} ${view.description}`.toLowerCase().includes(query)); }).sort((a, b) => state.sort === "priceAsc" ? a.price - b.price : state.sort === "priceDesc" ? b.price - a.price : state.sort === "name" ? localizedProduct(a).name.localeCompare(localizedProduct(b).name, state.lang) : a.id - b.id); }
-function renderCategories() { const filters = byId("categoryFilters"); const grid = byId("categoryGrid"); filters.innerHTML = ""; grid.innerHTML = ""; categories.forEach((category) => { const button = document.createElement("button"); button.type = "button"; button.textContent = localizedCategory(category); button.className = category === state.category ? "active" : ""; button.onclick = () => { state.category = category; render(); }; filters.append(button); }); categories.slice(1).forEach((category) => { const items = products.filter((product) => product.category === category); const card = document.createElement("button"); card.type = "button"; card.className = "category-card glow-card"; card.innerHTML = `<strong>${localizedCategory(category)}</strong><span>${items.length} ${state.lang === "en" ? "products" : state.lang === "kk" ? "тауар" : "товаров"} · ${state.lang === "en" ? "from" : state.lang === "kk" ? "бастап" : "от"} ${formatPrice(Math.min(...items.map((item) => item.price)))}</span>`; card.onclick = () => { state.category = category; render(); }; grid.append(card); }); }
+function filteredProducts() { const query = state.query.trim().toLowerCase(); return products.filter((product) => { const view = localizedProduct(product); return (state.category === "Все" || product.category === state.category) && (!state.favoritesOnly || state.favorites.includes(product.id)) && (!query || `${view.name} ${view.category} ${view.description}`.toLowerCase().includes(query)); }).sort((a, b) => state.sort === "priceAsc" ? a.price - b.price : state.sort === "priceDesc" ? b.price - a.price : state.sort === "name" ? localizedProduct(a).name.localeCompare(localizedProduct(b).name, state.lang) : a.id - b.id); }
+function renderCategories() { const filters = byId("categoryFilters"); filters.innerHTML = ""; categories.forEach((category) => { const button = document.createElement("button"); button.type = "button"; button.textContent = localizedCategory(category); button.className = category === state.category ? "active" : ""; button.onclick = () => { state.category = category; render(); }; filters.append(button); }); }
 function renderHeroProducts() { const target = byId("heroProducts"); if (!target) return; target.className = "hero-showcase"; target.innerHTML = products.slice(0, 3).map((product, index) => { const view = localizedProduct(product); return `<button class="showcase-photo ${index === 0 ? "large" : ""}" data-product-id="${product.id}" style="background-image:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.55)),url('${product.imageUrl}')"><span>${view.category}</span><strong>${view.name}</strong><small>${state.lang === "en" ? "from" : state.lang === "kk" ? "бастап" : "от"} ${formatPrice(product.price)}</small></button>`; }).join(""); target.querySelectorAll("[data-product-id]").forEach((button) => button.onclick = () => openProduct(Number(button.dataset.productId))); }
 function renderProducts() { const grid = byId("productGrid"); const found = filteredProducts(); grid.innerHTML = ""; byId("resultsTitle").textContent = state.category === "Все" ? (state.lang === "en" ? "Recommended" : state.lang === "kk" ? "Ұсынылған" : "Рекомендуемые") : localizedCategory(state.category); byId("resultsCount").textContent = `${found.length} ${state.lang === "en" ? "products" : state.lang === "kk" ? "тауар" : "товаров"}`; if (!found.length) { grid.innerHTML = `<div class="empty-state">${t("noResults")}</div>`; return; } found.forEach((product) => { const view = localizedProduct(product); const card = document.getElementById("productTemplate").content.cloneNode(true); const article = card.querySelector(".product-card"); const image = card.querySelector(".product-image"); image.style.backgroundImage = `linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.38)),url('${product.imageUrl}')`; image.innerHTML = `<span>${localizedBadge(product.badge || "Товар")}</span>`; card.querySelector(".product-category").textContent = view.category; card.querySelector("h3").textContent = view.name; card.querySelector("p").textContent = view.description; card.querySelector(".price-row strong").textContent = `${state.lang === "en" ? "from" : state.lang === "kk" ? "бастап" : "от"} ${formatPrice(product.price)}`; card.querySelector(".price-row span").textContent = localizedUnit(product.unit); card.querySelector(".details-button").textContent = t("details"); card.querySelector(".buy-button").textContent = t("buy"); article.onclick = () => openProduct(product.id); card.querySelectorAll("button").forEach((button) => button.onclick = (event) => { event.stopPropagation(); }); card.querySelector(".details-button").onclick = (event) => { event.stopPropagation(); openProduct(product.id); }; card.querySelector(".product-image").onclick = (event) => { event.stopPropagation(); openProduct(product.id); }; card.querySelector(".buy-button").onclick = (event) => { event.stopPropagation(); addToCart(product.id); }; grid.append(card); }); }
 function renderSearchSuggest() { const box = byId("searchSuggest"); const matches = state.query.trim() ? filteredProducts().slice(0, 6) : []; box.innerHTML = matches.map((product) => { const view = localizedProduct(product); return `<button type="button" data-product-id="${product.id}"><span style="background-image:url('${product.imageUrl}')"></span><strong>${view.name}</strong><b>${formatPrice(product.price)}</b></button>`; }).join(""); box.classList.toggle("visible", matches.length > 0); box.querySelectorAll("button").forEach((button) => button.onclick = () => { openProduct(Number(button.dataset.productId)); box.classList.remove("visible"); }); }
@@ -103,7 +226,7 @@ async function loadOrders() { const target = byId("ordersList"); if (!target || 
 function applyLanguage() { document.documentElement.lang = state.lang; document.querySelectorAll("[data-i18n]").forEach((node) => { const value = t(node.dataset.i18n); if (value) node.textContent = value; }); byId("searchInput").placeholder = t("search"); const language = document.querySelector(`[data-language="${state.lang}"]`); if (language) { byId("languageCurrent").innerHTML = `${language.innerHTML}<b>⌄</b>`; } renderProducts(); renderCart(); }
 function render() { refreshCategories(); renderHeroProducts(); renderCategories(); renderProducts(); renderCart(); renderProfile(); applyLanguage(); }
 function setAuthMessage(message, type = "success") { const target = byId("authMessage"); target.textContent = message; target.className = `auth-message ${type}`; }
-function authValidation(data, mode) { const phone = data.phone.replace(/\D/g, ""); const errors = []; if (mode === "register" && data.name.trim().length < 2) errors.push(state.lang === "en" ? "Enter your name." : state.lang === "kk" ? "Атыңызды енгізіңіз." : "Введите имя минимум из 2 букв."); if (phone.length !== 11 || !phone.startsWith("7")) errors.push(state.lang === "en" ? "Use a valid Kazakhstan phone number." : state.lang === "kk" ? "Қазақстанның дұрыс телефон нөмірін енгізіңіз." : "Введите корректный номер Казахстана."); if (data.password.length < 8 || !/[A-ZА-ЯӘӨҰҮҚҒІ]/.test(data.password) || !/[a-zа-яәөұүқғі]/.test(data.password) || !/\d/.test(data.password)) errors.push(state.lang === "en" ? "Password must contain 8 characters, uppercase, lowercase and a number." : state.lang === "kk" ? "Құпиясөзде 8 таңба, бас және кіші әріп, сан болуы керек." : "Пароль должен содержать 8 символов, заглавную и строчную букву, а также цифру."); return errors; }
+function authValidation(data, mode) { const phone = data.phone.replace(/\D/g, ""); const normalizedPhone = phone.length === 10 ? `7${phone}` : phone.length === 11 && phone.startsWith("8") ? `7${phone.slice(1)}` : phone; const errors = []; if (mode === "register" && data.name.trim().length < 2) errors.push(state.lang === "en" ? "Enter your name." : state.lang === "kk" ? "Атыңызды енгізіңіз." : "Введите имя минимум из 2 букв."); if (normalizedPhone.length !== 11 || !normalizedPhone.startsWith("7")) errors.push(state.lang === "en" ? "Use a valid Kazakhstan phone number." : state.lang === "kk" ? "Қазақстанның дұрыс телефон нөмірін енгізіңіз." : "Введите корректный номер Казахстана."); if (data.password.length < 8 || !/[A-ZА-ЯӘӨҰҮҚҒІ]/.test(data.password) || !/[a-zа-яәөұүқғі]/.test(data.password) || !/\d/.test(data.password)) errors.push(state.lang === "en" ? "Password must contain 8 characters, uppercase, lowercase and a number." : state.lang === "kk" ? "Құпиясөзде 8 таңба, бас және кіші әріп, сан болуы керек." : "Пароль должен содержать 8 символов, заглавную и строчную букву, а также цифру."); return errors; }
 async function submitAuth(event) { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); const mode = form.dataset.mode; const errors = authValidation(data, mode); if (errors.length) { setAuthMessage(errors[0], "error"); return; } const endpoint = mode === "login" ? "/api/auth/login" : "/api/auth/register"; try { const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, phone: data.phone.replace(/\D/g, "") }) }); const result = await response.json(); if (!response.ok) throw new Error(result.error); state.profile = result.user; save(); renderProfile(); if (mode === "register") { setAuthMessage(state.lang === "en" ? "You are registered. Sign in to your account." : state.lang === "kk" ? "Сіз тіркелдіңіз. Аккаунтқа кіріңіз." : "Вы зарегистрированы. Войдите в аккаунт."); document.querySelector('[data-auth-mode="login"]').click(); } else { setAuthMessage(state.lang === "en" ? "You have successfully signed in." : state.lang === "kk" ? "Аккаунтқа сәтті кірдіңіз." : "Вы успешно вошли в аккаунт."); } } catch (error) { setAuthMessage(error.message, "error"); } }
 async function submitOrder(event) { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); const phone = data.phone.replace(/\D/g, ""); const errors = []; if (data.name.trim().length < 2) errors.push("Введите имя минимум из 2 букв."); if (phone.length < 10) errors.push("Введите корректный телефон."); if (data.address.trim().length < 6) errors.push("Введите полный адрес доставки."); if (!state.cart.length) errors.push(t("empty")); byId("checkoutErrors").innerHTML = errors.map((error) => `<span>${error}</span>`).join(""); if (errors.length) return; try { const response = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, phone, items: state.cart }) }); const result = await response.json(); if (!response.ok) throw new Error(result.error); state.profile = { name: data.name, phone, address: data.address }; state.cart = []; save(); form.reset(); render(); setView("profile"); alert(`Заказ №${result.order.id} сохранён.`); } catch (error) { alert(`${error.message}. Проверьте подключение PostgreSQL.`); } }
 
@@ -120,7 +243,6 @@ byId("startCheckout").onclick = () => { byId("checkoutInline").classList.add("op
 byId("authForm").dataset.mode = "register";
 byId("authForm").onsubmit = submitAuth;
 document.querySelectorAll("[data-auth-mode]").forEach((button) => button.onclick = () => { byId("authForm").dataset.mode = button.dataset.authMode; document.querySelectorAll("[data-auth-mode]").forEach((item) => item.classList.toggle("active", item === button)); byId("authNameField").hidden = button.dataset.authMode === "login"; byId("authAddressField").hidden = button.dataset.authMode === "login"; byId("authNameField").querySelector("input").required = button.dataset.authMode !== "login"; byId("authMessage").textContent = ""; byId("authMessage").className = "auth-message"; });
-byId("authForm").querySelector('input[name="phone"]').oninput = (event) => { const digits = event.target.value.replace(/\D/g, "").replace(/^8/, "7").slice(0, 11); const parts = digits.match(/^7(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/); event.target.value = parts ? `+7${parts[1] ? ` ${parts[1]}` : ""}${parts[2] ? ` ${parts[2]}` : ""}${parts[3] ? ` ${parts[3]}` : ""}${parts[4] ? ` ${parts[4]}` : ""}` : event.target.value; };
 byId("checkoutForm").onsubmit = submitOrder;
 setView((location.hash || "#catalog").slice(1) || "catalog");
 

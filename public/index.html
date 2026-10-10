@@ -3,32 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Балык - интернет магазин морепродуктов</title>
+    <title>Балык.kz — интернет-магазин морепродуктов</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=20261010-profile-reset2" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
         <a class="brand nav-link" href="#catalog" data-view-link="catalog">
-          <span class="brand-logo"><img src="./logo.svg" alt="Балык" /></span>
-          <span><strong data-i18n="brand">Балык</strong><small data-i18n="tagline">Интернет магазин морепродуктов</small></span>
+          <span class="brand-logo"><img src="./logo.svg?v=20261009-favorites" alt="Балык.kz" /></span>
+          <span><strong data-i18n="brand">Балык.kz</strong><small data-i18n="tagline">Интернет-магазин морепродуктов</small></span>
         </a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="headerNavigation">
+          <span></span><span></span><span></span>
+        </button>
         <div class="search-wrap">
           <label class="search" for="searchInput"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск: икра, сёмга, креветки..." /></label>
           <div class="search-suggest" id="searchSuggest"></div>
         </div>
-        <nav class="header-actions">
+        <nav class="header-actions" id="headerNavigation">
           <a class="nav-link active" href="#catalog" data-view-link="catalog" data-i18n="catalog">Каталог</a>
           <a class="nav-link" href="#cart" data-view-link="cart"><span data-i18n="cart">Корзина</span> <b id="cartCount">0</b></a>
-          <a class="nav-link" href="#profile" data-view-link="profile" data-i18n="profile">Профиль</a>
+          <a class="nav-link" id="accountLink" href="#profile" data-view-link="profile" data-i18n="login">Войти</a>
+          <a class="nav-link admin-nav-link" id="adminLink" href="#admin" data-view-link="admin" hidden>Админка</a>
+          <button class="nav-link logout-button" id="logoutButton" type="button" hidden>Выйти</button>
           <div class="language-menu" id="languageMenu"><button class="language-current" id="languageCurrent" type="button" aria-expanded="false"><img src="https://flagcdn.com/w40/ru.png" alt="Русский" /><span>RU</span><b>⌄</b></button><div class="language-options"><button type="button" data-language="ru"><img src="https://flagcdn.com/w40/ru.png" alt="Русский" /><span>Русский</span></button><button type="button" data-language="kk"><img src="https://flagcdn.com/w40/kz.png" alt="Қазақша" /><span>Қазақша</span></button><button type="button" data-language="en"><img src="https://flagcdn.com/w40/gb.png" alt="English" /><span>English</span></button></div></div>
         </nav>
       </header>
 
-      <main>
+      <main id="catalog">
         <section class="view active" id="view-catalog" data-view="catalog">
           <section class="hero">
             <div class="hero-copy">
@@ -46,10 +51,10 @@
             <article><strong data-i18n="weightTitle">Цена по весу</strong><span data-i18n="weightText">Расчёт за кг, граммы или упаковку.</span></article>
           </section>
 
-          <section class="section-head" id="catalog"><div><span class="eyebrow" data-i18n="catalogEyebrow">Каталог Балык</span><h2 data-i18n="catalogTitle">Выберите свежие продукты</h2></div><div class="sort-wrap"><label for="sortSelect" data-i18n="sort">Сортировка</label><select id="sortSelect"><option value="popular" data-i18n="sortPopular">Популярное</option><option value="priceAsc" data-i18n="sortCheap">Сначала дешевле</option><option value="priceDesc" data-i18n="sortExpensive">Сначала дороже</option><option value="name" data-i18n="sortName">По названию</option></select></div></section>
+          <section class="section-head"><div><span class="eyebrow" data-i18n="catalogEyebrow">Каталог Балык</span><h2 data-i18n="catalogTitle">Выберите свежие продукты</h2></div><div class="sort-wrap"><label for="sortSelect" data-i18n="sort">Сортировка</label><select id="sortSelect"><option value="popular" data-i18n="sortPopular">Популярное</option><option value="priceAsc" data-i18n="sortCheap">Сначала дешевле</option><option value="priceDesc" data-i18n="sortExpensive">Сначала дороже</option><option value="name" data-i18n="sortName">По названию</option></select></div></section>
           <section class="catalog-layout">
-            <aside class="filters"><h3 data-i18n="categories">Категории</h3><div id="categoryFilters" class="filter-list"></div><div class="delivery-note"><strong data-i18n="schedule">График</strong><span>Пн-Сб · 10:00-13:00</span><span data-i18n="sunday">Вс - выходной</span></div></aside>
-            <div><div class="category-grid" id="categoryGrid"></div><div class="results-bar"><strong id="resultsTitle">Рекомендуемые</strong><span id="resultsCount"></span></div><div class="product-grid sliding" id="productGrid"></div></div>
+            <aside class="filters"><h3 data-i18n="categories">Категории</h3><div id="categoryFilters" class="filter-list"></div><div class="delivery-note"><strong data-i18n="schedule">График</strong><span data-i18n="scheduleHours">Пн-Сб · 10:00-13:00</span><span data-i18n="sunday">Вс - выходной</span></div></aside>
+            <div><div class="results-bar"><strong id="resultsTitle">Рекомендуемые</strong><div class="results-tools"><button class="favorites-toggle" id="favoritesToggle" type="button" aria-pressed="false"><span id="favoritesToggleLabel">♡ Избранное</span><b id="favoritesCount">0</b></button><span id="resultsCount"></span></div></div><div class="product-grid sliding" id="productGrid"></div></div>
           </section>
         </section>
 
@@ -59,7 +64,21 @@
           <section class="checkout-inline" id="checkoutInline">
             <div class="page-head compact"><span class="eyebrow" data-i18n="checkout">Оформление</span><h2 data-i18n="checkoutTitle">Куда доставить заказ?</h2><p id="orderPreview"></p></div>
             <form class="checkout-page" id="checkoutForm" novalidate>
-              <div class="form-grid"><label><span data-i18n="nameLabel">Имя</span><input name="name" minlength="2" required /></label><label><span data-i18n="phoneLabel">Телефон</span><input name="phone" placeholder="+7 777 123 45 67" required /></label><label><span data-i18n="passwordLabel">Пароль</span><input name="password" type="password" minlength="6" placeholder="для входа в профиль" /></label><label class="wide"><span data-i18n="addressLabel">Адрес</span><input name="address" minlength="6" required /></label><label class="wide"><span data-i18n="commentLabel">Комментарий</span><textarea name="comment"></textarea></label></div>
+              <div class="form-grid checkout-contact-fields" id="checkoutContactFields">
+                <label><span data-i18n="nameLabel">Имя</span><input name="name" autocomplete="name" minlength="2" required /></label>
+                <label><span data-i18n="emailLabel">E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" required /></label>
+                <label class="wide"><span data-i18n="phoneLabel">Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="18" placeholder="Введите номер целиком" required /><small class="phone-hint" data-i18n="phoneHint">Казахстан: +7 7XX XXX XX XX или 8 7XX XXX XX XX.</small></label>
+              </div>
+              <p class="checkout-account-summary" id="checkoutAccountSummary" hidden></p>
+              <div class="form-grid delivery-address-fields">
+                <label><span data-i18n="cityLabel">Город</span><input name="city" autocomplete="address-level2" value="Астана" required /></label>
+                <label><span data-i18n="districtLabel">Район</span><input name="district" autocomplete="address-level3" required /></label>
+                <label class="wide"><span data-i18n="streetLabel">Улица / жилой комплекс</span><input name="street" autocomplete="street-address" required /></label>
+                <label><span data-i18n="houseLabel">Дом / корпус</span><input name="house" required /></label>
+                <label><span data-i18n="apartmentLabel">Квартира / офис</span><input name="apartment" autocomplete="address-line2" /></label>
+                <label><span data-i18n="entranceLabel">Подъезд / этаж</span><input name="entrance" /></label>
+                <label class="wide"><span data-i18n="commentLabel">Комментарий курьеру</span><textarea name="comment"></textarea></label>
+              </div>
               <div id="checkoutErrors" class="checkout-errors"></div><div class="checkout-bottom"><div><span data-i18n="toPay">К оплате</span><strong id="checkoutTotal">0 ₸</strong></div><button class="primary-button" type="submit" data-i18n="confirmOrder">Подтвердить заказ</button></div>
             </form>
           </section>
@@ -68,18 +87,91 @@
         <section class="view" id="view-profile" data-view="profile">
           <div class="page-head"><span class="eyebrow" data-i18n="profile">Профиль</span><h1 data-i18n="profileTitle">Личный кабинет</h1><p data-i18n="profileText">Регистрация, вход, любимые товары и история заказов.</p></div>
           <div class="profile-layout">
-            <form class="auth-card" id="authForm"><h2 data-i18n="loginRegister">Вход / регистрация</h2><div class="auth-switch"><button type="button" class="active" data-auth-mode="register" data-i18n="register">Регистрация</button><button type="button" data-auth-mode="login" data-i18n="login">Войти</button></div><label id="authNameField"><span data-i18n="nameLabel">Имя</span><input name="name" autocomplete="name" required /></label><label><span data-i18n="phoneLabel">Телефон</span><input name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 777 123 45 67" required /></label><label><span data-i18n="passwordLabel">Пароль</span><input name="password" type="password" autocomplete="new-password" minlength="8" required /><small class="password-hint" data-i18n="passwordHint">Минимум 8 символов: заглавная буква, строчная буква и цифра.</small></label><label id="authAddressField"><span data-i18n="addressLabel">Адрес</span><input name="address" autocomplete="street-address" /></label><div id="authMessage" class="auth-message" role="status" aria-live="polite"></div><button class="primary-button" type="submit" data-i18n="saveProfile">Сохранить профиль</button></form>
-            <div class="profile-card pro"><div class="avatar" id="avatar">Б</div><div><span class="eyebrow">Балык club</span><h2 id="profileName">Гость</h2><p id="profileMeta">Создайте профиль.</p></div></div>
+            <form class="auth-card" id="authForm" novalidate>
+              <h2 data-i18n="loginRegister">Вход / регистрация</h2>
+              <div class="auth-switch"><button type="button" class="active" data-auth-mode="register" data-i18n="register">Регистрация</button><button type="button" data-auth-mode="login" data-i18n="login">Войти</button></div>
+              <div id="authMessage" class="auth-message" role="status" aria-live="polite"></div>
+              <label id="authLoginIdentifierField" hidden><span data-i18n="loginIdentifierLabel">E-mail</span><input name="identifier" autocomplete="username" /></label>
+              <label id="authNameField"><span data-i18n="nicknameLabel">Имя</span><input name="name" autocomplete="name" required /></label>
+              <label id="authEmailField"><span data-i18n="emailLabel">E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" required /></label>
+              <label id="authPhoneField"><span data-i18n="phoneLabel">Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="18" placeholder="Введите номер целиком" required /><small class="phone-hint" data-i18n="phoneHint">Казахстан: +7 7XX XXX XX XX или 8 7XX XXX XX XX.</small></label>
+              <label><span data-i18n="passwordLabel">Пароль</span><input name="password" type="password" autocomplete="new-password" minlength="8" required /><small class="password-hint" data-i18n="passwordHint">Минимум 8 символов: заглавная буква, строчная буква и цифра.</small></label>
+              <label id="authConfirmPasswordField"><span data-i18n="confirmPasswordLabel">Повторите пароль</span><input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required /></label>
+              <label id="authAddressField"><span data-i18n="addressLabel">Адрес</span><input name="address" autocomplete="street-address" /></label>
+              <button class="primary-button" type="submit" data-i18n="saveProfile">Сохранить профиль</button>
+              <button class="text-button" id="forgotPasswordButton" type="button" data-i18n="forgotPassword">Забыли пароль?</button>
+            </form>
+            <form class="auth-card" id="passwordResetForm" novalidate hidden>
+              <h2 data-i18n="resetPasswordTitle">Восстановление пароля</h2>
+              <div id="resetPasswordMessage" class="auth-message" role="status" aria-live="polite"></div>
+              <label><span data-i18n="emailLabel">E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" required /></label>
+              <div id="resetCodeFields" hidden>
+                <label><span data-i18n="resetCodeLabel">Одноразовый код</span><input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
+                <label><span data-i18n="newPasswordLabel">Новый пароль</span><input name="newPassword" type="password" autocomplete="new-password" minlength="8" /></label>
+                <label><span data-i18n="confirmPasswordLabel">Повторите пароль</span><input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" /></label>
+              </div>
+              <button class="primary-button" id="requestResetCodeButton" type="button" data-i18n="sendResetCode">Отправить код</button>
+              <button class="primary-button" id="confirmPasswordResetButton" type="submit" data-i18n="resetPasswordSubmit" hidden>Изменить пароль</button>
+              <button class="text-button" id="cancelPasswordResetButton" type="button" data-i18n="backToLogin">Вернуться ко входу</button>
+            </form>
+            <div class="profile-card pro"><div class="avatar" id="avatar">Б</div><div><span class="eyebrow">Балык.kz</span><h2 id="profileName">Гость</h2><p id="profileMeta">Создайте профиль.</p><p id="accountMessage" class="account-message" role="status" aria-live="polite" hidden></p></div></div>
+            <section class="profile-edit-panel" id="profileEditPanel" hidden>
+              <h2 data-i18n="editProfileTitle">Изменить данные</h2>
+              <p data-i18n="editProfilePasswordNote">Для подтверждения изменений введите текущий пароль.</p>
+              <form id="profileEditForm" novalidate>
+                <div class="form-grid">
+                  <label><span data-i18n="nicknameLabel">Имя</span><input name="name" autocomplete="name" minlength="2" maxlength="120" required /></label>
+                  <label><span data-i18n="emailLabel">E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" required /></label>
+                  <label><span data-i18n="phoneLabel">Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="18" placeholder="Введите номер целиком" /></label>
+                  <label><span data-i18n="addressLabel">Адрес</span><input name="address" autocomplete="street-address" maxlength="300" /></label>
+                  <label class="wide"><span data-i18n="currentPasswordLabel">Текущий пароль для подтверждения</span><input name="currentPassword" type="password" autocomplete="current-password" required /></label>
+                </div>
+                <div id="profileEditMessage" class="auth-message" role="status" aria-live="polite"></div>
+                <div class="profile-edit-actions">
+                  <button class="primary-button" type="submit" data-i18n="saveChanges">Сохранить изменения</button>
+                  <button class="text-button" id="cancelProfileEditButton" type="button" data-i18n="cancel">Отмена</button>
+                </div>
+              </form>
+            </section>
+            <button class="text-button profile-edit-toggle" id="editProfileButton" type="button" data-i18n="editProfileTitle" hidden>Изменить данные</button>
             <div class="analytics-grid" id="analyticsGrid"></div>
-            <div class="orders-panel"><h2 data-i18n="orders">Мои заказы</h2><div id="ordersList"></div></div>
+            <div class="orders-panel"><h2 data-i18n="orders">Мои заказы</h2><div id="ordersList" aria-live="polite" aria-busy="false"></div></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-admin" data-view="admin">
+          <div class="page-head">
+            <span class="eyebrow">Балык.kz</span>
+            <h1>Панель администратора</h1>
+            <p>Заказы магазина и зарегистрированные пользователи.</p>
+          </div>
+          <div class="admin-dashboard">
+            <div class="admin-tabs" role="tablist" aria-label="Разделы панели администратора">
+              <button class="admin-tab active" type="button" role="tab" aria-selected="true" data-admin-tab="orders">Заказы</button>
+              <button class="admin-tab" type="button" role="tab" aria-selected="false" data-admin-tab="users">Пользователи</button>
+              <button class="admin-refresh" id="adminRefresh" type="button">Обновить</button>
+            </div>
+            <p class="admin-message" id="adminMessage" role="status" aria-live="polite"></p>
+            <section class="admin-panel active" id="adminOrdersPanel" data-admin-panel="orders">
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Заказ</th><th>Покупатель</th><th>Контакты и адрес</th><th>Состав</th><th>Сумма</th><th>Статус</th><th>Дата</th></tr></thead><tbody id="adminOrdersBody"></tbody></table></div>
+            </section>
+            <section class="admin-panel" id="adminUsersPanel" data-admin-panel="users">
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Пользователь</th><th>E-mail</th><th>Телефон</th><th>Адрес</th><th>Роль</th><th>Регистрация</th></tr></thead><tbody id="adminUsersBody"></tbody></table></div>
+            </section>
           </div>
         </section>
 
         <section class="view" id="view-product" data-view="product"><div id="productPage"></div></section>
       </main>
+      <footer class="site-footer">
+        <div class="site-footer-brand"><strong>Балык.kz</strong><span data-i18n="footerSchedule">Пн–Сб · 10:00–13:00 · Вс — выходной</span></div>
+        <a class="site-footer-phone" href="tel:+77172548253"><span data-i18n="footerCall">Остались вопросы? Позвоните нам</span><strong>+7 (7172) 54-82-53</strong><small data-i18n="autoAnswer">Автоответчик</small></a>
+        <span class="site-footer-note" data-i18n="footerDelivery">Доставка по Астане · оплата наличными при получении</span>
+      </footer>
     </div>
 
     <template id="productTemplate"><article class="product-card"><button class="favorite" type="button">♡</button><button class="product-image" type="button"></button><div class="product-body"><span class="product-category"></span><h3></h3><p></p><div class="price-row"><strong></strong><span></span></div><div class="card-actions"><button class="details-button" type="button">Подробнее</button><button class="buy-button" type="button">В корзину</button></div></div></article></template>
-    <script src="./app.js"></script>
+    <script src="./app.js?v=20261010-photo36"></script>
+    <script src="./app-enhancements.js?v=20261010-profile-reset2"></script>
   </body>
 </html>

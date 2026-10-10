@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check db.js && node --check server.js && node --check public/app.js && node --check public/app-enhancements.js",
+    "test": "node --test"
   },
   "dependencies": {
+    "nodemailer": "^10.1.0",
     "pg": "^8.13.1"
   },
   "keywords": [
@@ -19,6 +22,6 @@
   "author": "",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   }
 }

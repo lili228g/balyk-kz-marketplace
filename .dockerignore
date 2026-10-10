@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+node_modules
+npm-debug.log*
+coverage
+dist
+test
+Microsoft
+*.log
