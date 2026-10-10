@@ -391,7 +391,7 @@ byId("logoutButton").addEventListener("click", async () => {
   button.disabled = true;
   try {
     const response = await fetch("/api/auth/logout", { method: "POST" });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     state.profile = null;
     save();
@@ -570,7 +570,7 @@ submitAuth = async function (event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     state.profile = result.user;
     save();
@@ -636,7 +636,7 @@ submitOrder = async function (event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     if (!signedIn) {
       state.profile = { name: data.name.trim(), email: data.email.trim().toLowerCase(), phone: normalizePhone(data.phone), address };
@@ -663,7 +663,7 @@ loadOrders = async function () {
   target.textContent = state.lang === "en" ? "Loading orders…" : state.lang === "kk" ? "Тапсырыстар жүктелуде…" : "Загружаем заказы…";
   try {
     const response = await fetch("/api/orders");
-    const data = await response.json();
+    const data = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(data.error || t("noResults"));
     if (!data.orders?.length) {
       target.textContent = state.lang === "en" ? "No orders yet." : state.lang === "kk" ? "Әзірге тапсырыс жоқ." : "Заказов пока нет.";
@@ -883,7 +883,7 @@ loadOrders = async function () {
   target.innerHTML = `<p class="orders-loading">${state.lang === "en" ? "Loading orders…" : state.lang === "kk" ? "Тапсырыстар жүктелуде…" : "Загружаем заказы…"}</p>`;
   try {
     const response = await fetch("/api/orders", { cache: "no-store" });
-    const data = await response.json();
+    const data = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(data.error || t("noResults"));
     if (requestId !== ordersRequestId) return;
     target.setAttribute("aria-busy", "false");
@@ -1003,7 +1003,7 @@ async function requestPasswordResetCode() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email.value.trim().toLowerCase() })
     });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     byId("resetCodeFields").hidden = false;
     ["code", "newPassword", "confirmPassword"].forEach((name) => {
@@ -1049,7 +1049,7 @@ async function submitPasswordReset(event) {
         newPassword: data.newPassword
       })
     });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     const email = data.email.trim().toLowerCase();
     form.reset();
@@ -1121,7 +1121,7 @@ async function submitProfileEdit(event) {
         currentPassword: data.currentPassword
       })
     });
-    const result = await response.json();
+    const result = await window.parseApiResponse(response);
     if (!response.ok) throw new Error(result.error || t("noResults"));
     state.profile = result.user;
     save();
@@ -1338,7 +1338,7 @@ function adminLine(primary, secondary = "") {
 
 async function fetchAdminData(path, options = {}) {
   const response = await fetch(path, { cache: "no-store", ...options });
-  const result = await response.json();
+  const result = await window.parseApiResponse(response);
   if (!response.ok) throw new Error(result.error || "Не удалось загрузить данные администратора.");
   return result;
 }

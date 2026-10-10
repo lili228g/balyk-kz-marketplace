@@ -244,7 +244,7 @@ test("admin credentials are documented as environment-only secrets", () => {
   assert.match(readme, /не добавлен в коммит/);
 });
 
-test("production deployment uses non-root Node, private PostgreSQL, HTTPS, and required secrets", () => {
+test("production deployment uses non-root Node, private PostgreSQL, HTTPS, and optional admin secrets", () => {
   const dockerfile = read("Dockerfile");
   const compose = read("docker-compose.yml");
   const caddy = read("Caddyfile");
@@ -273,9 +273,13 @@ test("production deployment uses non-root Node, private PostgreSQL, HTTPS, and r
   assert.match(caddy, /reverse_proxy app:3000/);
   assert.match(ignore, /^\.env\.\*$/m);
   assert.match(envExample, /^SITE_ADDRESS=$/m);
-  assert.match(server, /Production startup requires ADMIN_EMAIL and ADMIN_PASSWORD/);
   assert.match(server, /Production startup requires a working PostgreSQL connection/);
   assert.match(server, /TRUST_PROXY === "true"/);
+  assert.match(server, /const ready = databaseReady/);
+  assert.match(read("api/auth/[...path].js"), /require\("\.\.\/\.\.\/server"\)\.vercelHandler/);
+  assert.match(read("api/admin/[...path].js"), /require\("\.\.\/\.\.\/server"\)\.vercelHandler/);
+  assert.match(read("public/app.js"), /window\.parseApiResponse = async function/);
+  assert.match(read("public/app-enhancements.js"), /window\.parseApiResponse\(response\)/);
   assert.match(readme, /docker compose up -d --build/);
   assert.match(readme, /docker compose down --volumes/);
 });

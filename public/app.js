@@ -17,6 +17,22 @@ const images = {
   market: "./images/seafood-market.jpg"
 };
 
+window.parseApiResponse = async function parseApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().includes("application/json")) {
+    const status = response.ok ? "" : ` (HTTP ${response.status})`;
+    throw new Error(`Сервер вернул не JSON-ответ${status}. Проверьте API-маршрут и повторите попытку.`);
+  }
+  try {
+    return await response.json();
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      throw new Error("Сервер вернул некорректный JSON-ответ.");
+    }
+    throw error;
+  }
+};
+
 const fallbackProducts = [
   { id: 1, name: "Икра горбуши 0.5 кг", category: "Икра", price: 35000, unit: "упаковка 500 г", weightStep: 500, badge: "Хит", imageUrl: images.heroIkra, description: "Зернистая икра горбуши дальневосточного вылова.", details: "Упаковка 500 г." },
   { id: 2, name: "Икра горбуши 250 г", category: "Икра", price: 17500, unit: "банка 250 г", weightStep: 250, badge: "Популярно", imageUrl: images.ikra250g, description: "Зернистая икра горбуши дальневосточного вылова.", details: "Банка 250 г." },

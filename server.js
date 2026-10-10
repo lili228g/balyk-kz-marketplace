@@ -244,7 +244,7 @@ async function handleApi(req, res, url) {
 
     if (url.pathname === "/api/health") {
       const adminConfigured = Boolean(process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD);
-      const ready = databaseReady && (process.env.NODE_ENV !== "production" || adminConfigured);
+      const ready = databaseReady;
       sendJson(res, ready ? 200 : 503, {
         ok: ready,
         database: databaseReady ? "connected" : "unavailable",
@@ -426,10 +426,6 @@ async function handleRequest(req, res) {
   if (rateLimit(req, res, url)) return;
   if (url.pathname.startsWith("/api/") && !databaseReady) {
     try {
-      if (process.env.NODE_ENV === "production" &&
-          (!String(process.env.ADMIN_EMAIL || "").trim() || !String(process.env.ADMIN_PASSWORD || ""))) {
-        throw new Error("Production startup requires ADMIN_EMAIL and ADMIN_PASSWORD environment secrets.");
-      }
       await initializeDatabase();
     } catch (error) {
       console.error(`PostgreSQL is not ready: ${error.message}`);
@@ -490,11 +486,6 @@ server.requestTimeout = Number(process.env.REQUEST_TIMEOUT_MS || 20_000);
 server.keepAliveTimeout = Number(process.env.KEEP_ALIVE_TIMEOUT_MS || 5_000);
 
 async function start() {
-  if (process.env.NODE_ENV === "production" &&
-      (!String(process.env.ADMIN_EMAIL || "").trim() || !String(process.env.ADMIN_PASSWORD || ""))) {
-    throw new Error("Production startup requires ADMIN_EMAIL and ADMIN_PASSWORD environment secrets.");
-  }
-
   try {
     await initializeDatabase();
     console.log("PostgreSQL connected: balykkz");
