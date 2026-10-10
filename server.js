@@ -25,9 +25,9 @@ const {
 const root = path.join(__dirname, "public");
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
-const trustProxy = process.env.TRUST_PROXY === "true";
+const trustProxy = process.env.TRUST_PROXY === "true" || Boolean(process.env.VERCEL);
 let databaseReady = false;
-let databaseError = null;
+let databaseInitialization = null;
 const bodyLimit = Number(process.env.BODY_LIMIT_BYTES || 100_000);
 const apiWindowMs = Number(process.env.API_RATE_WINDOW_MS || 60_000);
 const apiMaxRequests = Number(process.env.API_RATE_MAX || 120);
@@ -85,6 +85,21 @@ function validationError(message, statusCode = 400) {
   const error = new Error(message);
   error.statusCode = statusCode;
   return error;
+}
+
+function initializeDatabase() {
+  if (!databaseInitialization) {
+    databaseInitialization = initDatabase()
+      .then(() => {
+        databaseReady = true;
+      })
+      .catch((error) => {
+        databaseReady = false;
+        databaseInitialization = null;
+        throw error;
+      });
+  }
+  return databaseInitialization;
 }
 
 function clientIp(req) {
@@ -399,7 +414,7 @@ async function handleApi(req, res, url) {
   return false;
 }
 
-const server = http.createServer(async (req, res) => {
+async function handleRequest(req, res) {
   let url;
   try {
     url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
@@ -409,6 +424,19 @@ const server = http.createServer(async (req, res) => {
     return;
   }
   if (rateLimit(req, res, url)) return;
+  if (url.pathname.startsWith("/api/") && !databaseReady) {
+    try {
+      if (process.env.NODE_ENV === "production" &&
+          (!String(process.env.ADMIN_EMAIL || "").trim() || !String(process.env.ADMIN_PASSWORD || ""))) {
+        throw new Error("Production startup requires ADMIN_EMAIL and ADMIN_PASSWORD environment secrets.");
+      }
+      await initializeDatabase();
+    } catch (error) {
+      console.error(`PostgreSQL is not ready: ${error.message}`);
+      sendJson(res, 503, { error: "Сервис временно недоступен: проверьте секреты и подключение к базе данных." });
+      return;
+    }
+  }
   if (await handleApi(req, res, url)) return;
 
   if (!["GET", "HEAD"].includes(req.method)) {
@@ -452,7 +480,9 @@ const server = http.createServer(async (req, res) => {
     });
     res.end(req.method === "HEAD" ? undefined : content);
   });
-});
+}
+
+const server = http.createServer(handleRequest);
 
 server.maxConnections = Number(process.env.MAX_CONNECTIONS || 600);
 server.headersTimeout = Number(process.env.HEADERS_TIMEOUT_MS || 10_000);
@@ -466,11 +496,9 @@ async function start() {
   }
 
   try {
-    await initDatabase();
-    databaseReady = true;
+    await initializeDatabase();
     console.log("PostgreSQL connected: balykkz");
   } catch (error) {
-    databaseError = error;
     if (process.env.NODE_ENV === "production") {
       throw new Error(`Production startup requires a working PostgreSQL connection: ${error.message}`, { cause: error });
     }
@@ -491,7 +519,11 @@ server.on("error", (error) => {
   process.exit(1);
 });
 
-start().catch((error) => {
-  console.error(`Balyk marketplace startup failed: ${error.message}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  start().catch((error) => {
+    console.error(`Balyk marketplace startup failed: ${error.message}`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { handleRequest, vercelHandler: handleRequest };

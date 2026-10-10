@@ -8,4 +8,5 @@ yarn-debug.log*
 pnpm-debug.log*
 coverage/
 dist/
+.vercel/
 Microsoft/Windows/PowerShell/ModuleAnalysisCache
