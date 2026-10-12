@@ -128,10 +128,11 @@ test("mobile header keeps the cart visible and shows non-linked social icons", (
 
 test("Kazakh portion choices remain legible when hovered or selected", () => {
   const styles = read("public/styles.css");
-  const logo = read("public/logo.svg");
+  const html = read("public/index.html");
   assert.match(styles, /\.portion-picker button\.active,\s*\.portion-picker button\.active:hover/);
   assert.match(styles, /overflow-wrap:\s*anywhere/);
-  assert.match(logo, /<svg[^>]+viewBox="0 0 128 128"/);
+  assert.match(html, /src="\.\/images\/balyk-logo-customer\.png\?v=20261012" alt="Логотип Балык\.kz"/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "balyk-logo-customer.png")));
 });
 
 test("authenticated users without a phone get an empty personal order history", () => {
