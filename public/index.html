@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261010-profile-reset2" />
+    <link rel="stylesheet" href="./styles.css?v=20261012-mobile-cart-social" />
   </head>
   <body>
     <div class="app-shell">
@@ -16,9 +16,23 @@
           <span class="brand-logo"><img src="./logo.svg?v=20261009-favorites" alt="Балык.kz" /></span>
           <span><strong data-i18n="brand">Балык.kz</strong><small data-i18n="tagline">Интернет-магазин морепродуктов</small></span>
         </a>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="headerNavigation">
-          <span></span><span></span><span></span>
-        </button>
+        <div class="mobile-quick-actions">
+          <a class="mobile-cart-link" href="#cart" data-view-link="cart" aria-label="Корзина">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L21 8H6" /><circle cx="10" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>
+            <b id="mobileCartCount">0</b>
+          </a>
+          <div class="mobile-social-links" aria-label="Социальные сети">
+            <span class="mobile-social-icon" role="img" aria-label="Instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle class="social-dot" cx="17.6" cy="6.7" r="1" /></svg>
+            </span>
+            <span class="mobile-social-icon" role="img" aria-label="WhatsApp" title="WhatsApp">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-11.8 7L4 20l1.3-4A8 8 0 1 1 20 11.7Z" /><path d="M9 8.5c.3-.5.6-.5.9-.5l.7 1.8-.8 1c.7 1.4 1.5 2.2 2.9 2.9l1-.8 1.8.7c.1.3 0 .7-.5 1-1 .7-2.4.3-4.1-.7-1.7-1.1-2.8-2.5-3-3.8-.1-.7.4-1.3 1.1-1.6Z" /></svg>
+            </span>
+          </div>
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="headerNavigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
         <div class="search-wrap">
           <label class="search" for="searchInput"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск: икра, сёмга, креветки..." /></label>
           <div class="search-suggest" id="searchSuggest"></div>

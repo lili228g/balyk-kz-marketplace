@@ -111,7 +111,19 @@ test("product-card shine loops across the full card and respects reduced-motion 
   assert.match(styles, /\.product-card::after\s*\{[^}]*width:\s*45%;[^}]*animation:\s*product-card-shine\s+6s\s+ease-in-out\s+infinite/s);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.product-card::after\s*\{\s*animation:\s*none;/);
   assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(210px,\s*260px\)\s*minmax\(0,\s*1fr\)/);
-  assert.match(html, /styles\.css\?v=20261010-profile-reset2/);
+  assert.match(html, /styles\.css\?v=20261012-mobile-cart-social/);
+});
+
+test("mobile header keeps the cart visible and shows non-linked social icons", () => {
+  const html = read("public/index.html");
+  const styles = read("public/styles.css");
+  const enhancements = read("public/app-enhancements.js");
+  assert.match(html, /class="mobile-cart-link" href="#cart" data-view-link="cart"/);
+  assert.match(html, /id="mobileCartCount"/);
+  assert.match(html, /class="mobile-social-icon" role="img" aria-label="Instagram"/);
+  assert.match(html, /class="mobile-social-icon" role="img" aria-label="WhatsApp"/);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.topbar > \.mobile-quick-actions\s*\{[\s\S]*display:\s*flex/);
+  assert.match(enhancements, /byId\("mobileCartCount"\)\.textContent = cartCount/);
 });
 
 test("Kazakh portion choices remain legible when hovered or selected", () => {

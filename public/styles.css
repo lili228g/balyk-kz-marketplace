@@ -2459,7 +2459,7 @@ h6,
   }
 
   .topbar {
-    grid-template-columns: minmax(0, 1fr) 48px;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "brand menu"
       "search search"
@@ -2471,6 +2471,10 @@ h6,
 
   .topbar > .brand {
     grid-area: brand;
+  }
+
+  .topbar > .mobile-quick-actions {
+    grid-area: menu;
   }
 
   .mobile-menu-toggle {
@@ -3771,7 +3775,7 @@ main#catalog {
 
 @media (max-width: 760px) {
   .topbar {
-    grid-template-columns: minmax(0, 1fr) 46px;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "brand menu" "search search" "navigation navigation";
     gap: 10px;
     padding: 10px;
@@ -4089,5 +4093,100 @@ main#catalog {
     flex-wrap: wrap;
     justify-content: flex-end;
     min-width: 0;
+  }
+}
+
+.mobile-quick-actions {
+  display: none;
+}
+
+.mobile-cart-link {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fff;
+  color: var(--brand-dark);
+}
+
+.mobile-cart-link svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.mobile-cart-link b {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.mobile-social-links {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.mobile-social-icon {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: var(--brand-dark);
+}
+
+.mobile-social-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.mobile-social-icon .social-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+@media (max-width: 760px) {
+  .topbar > .mobile-quick-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .topbar .mobile-menu-toggle {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+  }
+}
+
+@media (max-width: 380px) {
+  .topbar .brand strong {
+    font-size: 18px;
   }
 }

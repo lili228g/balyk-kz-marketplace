@@ -848,10 +848,12 @@ renderCart = function () {
     };
     target.append(row);
   });
-  byId("cartCount").textContent = state.cart.reduce((count, item) => {
+  const cartCount = state.cart.reduce((count, item) => {
     const product = products.find((entry) => entry.id === item.id);
     return count + (product && weighted(product) ? item.grams / 1000 : item.qty);
   }, 0);
+  byId("cartCount").textContent = cartCount;
+  byId("mobileCartCount").textContent = cartCount;
   byId("cartTotal").textContent = formatPrice(cartTotal());
   byId("checkoutTotal").textContent = formatPrice(cartTotal());
   renderCheckoutPreview();
