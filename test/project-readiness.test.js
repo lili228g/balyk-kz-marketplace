@@ -111,7 +111,7 @@ test("product-card shine loops across the full card and respects reduced-motion 
   assert.match(styles, /\.product-card::after\s*\{[^}]*width:\s*45%;[^}]*animation:\s*product-card-shine\s+6s\s+ease-in-out\s+infinite/s);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.product-card::after\s*\{\s*animation:\s*none;/);
   assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(210px,\s*260px\)\s*minmax\(0,\s*1fr\)/);
-  assert.match(html, /styles\.css\?v=20261012-mobile-cart-social/);
+  assert.match(html, /styles\.css\?v=20261012-mobile-header10/);
 });
 
 test("mobile header keeps the cart visible and shows non-linked social icons", () => {
@@ -131,8 +131,22 @@ test("Kazakh portion choices remain legible when hovered or selected", () => {
   const html = read("public/index.html");
   assert.match(styles, /\.portion-picker button\.active,\s*\.portion-picker button\.active:hover/);
   assert.match(styles, /overflow-wrap:\s*anywhere/);
-  assert.match(html, /src="\.\/images\/balyk-logo-customer\.png\?v=20261012" alt="Логотип Балык\.kz"/);
+  assert.match(html, /src="\.\/images\/balyk-logo-customer\.png\?v=20261012-transparent" alt="Логотип Балык\.kz"/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "balyk-logo-customer.png")));
+});
+
+test("mobile navigation has visible button surfaces and a compact inline language selector", () => {
+  const html = read("public/index.html");
+  const styles = read("public/styles.css");
+  const app = read("public/app.js");
+  assert.ok(html.indexOf('class="mobile-cart-link"') < html.indexOf('id="mobileMenuToggle"'));
+  assert.match(styles, /\.topbar \.header-actions\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.match(styles, /\.topbar \.header-actions > a,\s*\.topbar \.header-actions \.logout-button\s*\{[^}]*border:\s*1px solid/s);
+  assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+  assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*none/s);
+  assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
+  assert.match(html, /app\.js\?v=20261012-mobile-header3/);
+  assert.match(app, /currentLanguage\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });
 
 test("authenticated users without a phone get an empty personal order history", () => {
