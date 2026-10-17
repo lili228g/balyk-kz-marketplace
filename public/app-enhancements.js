@@ -745,16 +745,9 @@ submitOrder = async function (event) {
     setView("profile");
     await loadOrders();
     const orderSaved = state.lang === "en"
-      ? `Order №${result.order.id} saved.`
-      : state.lang === "kk" ? `№${result.order.id} тапсырыс сақталды.` : `Заказ №${result.order.id} сохранён.`;
-    const notificationFailed = result.notification?.sent === false
-      ? state.lang === "en"
-        ? " The email copy could not be sent; check SMTP settings."
-        : state.lang === "kk"
-          ? " Электрондық поштаға көшірме жіберілмеді; SMTP баптауларын тексеріңіз."
-          : " Копия на почту не отправлена; проверьте настройки SMTP."
-      : "";
-    alert(`${orderSaved}${notificationFailed}`);
+      ? `Order №${result.order.id} was received.`
+      : state.lang === "kk" ? `№${result.order.id} тапсырысыңыз қабылданды.` : `Заказ №${result.order.id} принят.`;
+    alert(orderSaved);
   } catch (error) {
     alert(error.message);
   }

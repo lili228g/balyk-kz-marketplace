@@ -355,15 +355,13 @@ async function handleApi(req, res, url) {
       const payload = await readBody(req);
       const session = await currentSession(req);
       const order = await createOrder(payload, session);
-      let notification;
       try {
-        notification = await sendOrderNotificationEmail(order);
+        await sendOrderNotificationEmail(order);
       } catch (error) {
         console.error(`Order ${order.id} was saved, but email notification failed:`, error.code || error.message);
-        notification = { sent: false, reason: "delivery_failed" };
       }
       const { items, customerName, email, phone, address, comment, ...publicOrder } = order;
-      sendJson(res, 201, { order: publicOrder, notification });
+      sendJson(res, 201, { order: publicOrder });
       return true;
     }
 

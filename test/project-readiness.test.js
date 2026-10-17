@@ -229,8 +229,8 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Форель радужная"[\s\S]*?rainbow-trout-customer-20261010\.png\?v=20261017-rainbow-trout1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
   assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/salmon-smoked-slab-customer\.png'/);
   assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?salmon-smoked-slab-customer\.png\?v=20261017-salmon-slab1/);
   assert.match(seed, /'Тунец филе'[\s\S]*?'\.\/images\/tuna-fillet-customer-20261010\.png\?v=20261010-photo1'/);
@@ -248,7 +248,7 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Пивной набор"[\s\S]*?beer-snack-customer-20261009\.png\?v=20261017-beer-snack1/);
   assert.match(enhancements, /product\?\.name === "Икра горбуши 0\.5 кг"[\s\S]*?backgroundPosition = "center 78%"/);
   assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
   assert.match(enhancements, /product\?\.name === "Филе судака" \|\| product\?\.name === "Филе судака без глазури"[\s\S]*?backgroundPosition = "center 78%"/);
 });
 
@@ -449,12 +449,15 @@ test("orders are copied to the configured mailbox and admin order items include 
   assert.match(server, /to: recipient,[\s\S]*subject: `Новый заказ №/);
   assert.match(server, /Адрес доставки: \$\{order\.address\}/);
   assert.match(server, /Order \$\{order\.id\} was saved, but email notification failed/);
-  assert.match(server, /notification = \{ sent: false, reason: "delivery_failed" \}/);
+  assert.match(server, /await sendOrderNotificationEmail\(order\)/);
+  assert.match(server, /sendJson\(res, 201, \{ order: publicOrder \}\)/);
+  assert.doesNotMatch(server, /sendJson\(res, 201, \{ order: publicOrder, notification \}\)/);
   assert.match(database, /SELECT id, name, image_url, COALESCE\(package_price, price_per_kg\)/);
   assert.match(database, /imageUrl: product\.image_url/);
   assert.match(database, /'imageUrl', p\.image_url/);
   assert.match(enhancements, /admin-order-product-image/);
-  assert.match(enhancements, /Копия на почту не отправлена/);
+  assert.doesNotMatch(enhancements, /Копия на почту не отправлена|The email copy could not be sent|Электрондық поштаға көшірме жіберілмеді/);
+  assert.match(enhancements, /Заказ №\$\{result\.order\.id\} принят\./);
   assert.match(styles, /\.admin-order-product-image/);
   assert.match(compose, /ORDER_NOTIFICATION_EMAIL: \$\{ORDER_NOTIFICATION_EMAIL:-87015240905@mail\.ru\}/);
   assert.match(readme, /87015240905@mail\.ru/);
