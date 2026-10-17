@@ -6,8 +6,8 @@
     <title>Балык.kz — интернет-магазин морепродуктов</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261012-mobile-header10" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=20261018-social-recipes1" />
   </head>
   <body>
     <div class="app-shell">
@@ -16,23 +16,6 @@
           <span class="brand-logo"><img src="./images/balyk-logo-customer.png?v=20261012-transparent" alt="Логотип Балык.kz" /></span>
           <span><strong data-i18n="brand">Балык.kz</strong><small data-i18n="tagline">Интернет-магазин морепродуктов</small></span>
         </a>
-        <div class="mobile-quick-actions">
-          <div class="mobile-social-links" aria-label="Социальные сети">
-            <span class="mobile-social-icon" role="img" aria-label="Instagram" title="Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle class="social-dot" cx="17.6" cy="6.7" r="1" /></svg>
-            </span>
-            <span class="mobile-social-icon" role="img" aria-label="WhatsApp" title="WhatsApp">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-11.8 7L4 20l1.3-4A8 8 0 1 1 20 11.7Z" /><path d="M9 8.5c.3-.5.6-.5.9-.5l.7 1.8-.8 1c.7 1.4 1.5 2.2 2.9 2.9l1-.8 1.8.7c.1.3 0 .7-.5 1-1 .7-2.4.3-4.1-.7-1.7-1.1-2.8-2.5-3-3.8-.1-.7.4-1.3 1.1-1.6Z" /></svg>
-            </span>
-          </div>
-          <a class="mobile-cart-link" href="#cart" data-view-link="cart" aria-label="Корзина">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L21 8H6" /><circle cx="10" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>
-            <b id="mobileCartCount">0</b>
-          </a>
-          <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="headerNavigation">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
         <div class="search-wrap">
           <label class="search" for="searchInput"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск: икра, сёмга, креветки..." /></label>
           <div class="search-suggest" id="searchSuggest"></div>
@@ -45,6 +28,23 @@
           <button class="nav-link logout-button" id="logoutButton" type="button" hidden>Выйти</button>
           <div class="language-menu" id="languageMenu"><button class="language-current" id="languageCurrent" type="button" aria-label="Русский" aria-expanded="false"><img src="https://flagcdn.com/w40/ru.png" alt="" /><span>RU</span><b>⌄</b></button><div class="language-options"><button type="button" data-language="ru"><img src="https://flagcdn.com/w40/ru.png" alt="Русский" /><span>Русский</span></button><button type="button" data-language="kk"><img src="https://flagcdn.com/w40/kz.png" alt="Қазақша" /><span>Қазақша</span></button><button type="button" data-language="en"><img src="https://flagcdn.com/w40/gb.png" alt="English" /><span>English</span></button></div></div>
         </nav>
+        <div class="mobile-quick-actions">
+          <div class="mobile-social-links" aria-label="Социальные сети">
+            <button class="mobile-social-icon" type="button" aria-label="Instagram" title="Instagram — скоро">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle class="social-dot" cx="17.6" cy="6.7" r="1" /></svg>
+            </button>
+            <a class="mobile-social-icon" href="https://wa.me/77765208514" aria-label="WhatsApp" title="Открыть чат WhatsApp" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-11.8 7L4 20l1.3-4A8 8 0 1 1 20 11.7Z" /><path d="M9 8.5c.3-.5.6-.5.9-.5l.7 1.8-.8 1c.7 1.4 1.5 2.2 2.9 2.9l1-.8 1.8.7c.1.3 0 .7-.5 1-1 .7-2.4.3-4.1-.7-1.7-1.1-2.8-2.5-3-3.8-.1-.7.4-1.3 1.1-1.6Z" /></svg>
+            </a>
+          </div>
+          <a class="mobile-cart-link" href="#cart" data-view-link="cart" aria-label="Корзина">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L21 8H6" /><circle cx="10" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>
+            <b id="mobileCartCount">0</b>
+          </a>
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="headerNavigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </header>
 
       <main id="catalog">
@@ -53,11 +53,19 @@
             <div class="hero-copy">
               <span class="eyebrow" data-i18n="heroEyebrow">Балык · свежие поставки по Астане</span>
               <h1 data-i18n="heroTitle">Икра, рыба и морепродукты с доставкой утром</h1>
-              <p data-i18n="heroText">Работаем с понедельника по субботу с 10:00 до 13:00. Доставка в первой половине дня при заказе от 15 000 ₸.</p>
+              <p data-i18n="heroText">Доставка по Астане при заказе от 15 000 ₸.</p>
               <div class="hero-actions"><a class="primary-link" href="#catalog" data-i18n="goCatalog">Смотреть каталог</a><a class="secondary-link nav-link" href="#cart" data-view-link="cart" data-i18n="goCart">Перейти в корзину</a></div>
             </div>
             <div class="hero-products" id="heroProducts"></div>
           </section>
+
+          <aside class="delivery-cutoff-notice" aria-labelledby="deliveryCutoffTitle">
+            <span class="delivery-cutoff-icon" aria-hidden="true">!</span>
+            <div>
+              <strong id="deliveryCutoffTitle" data-i18n="deliveryHoursTitle">Работаем с понедельника по субботу · 08:00–14:00</strong>
+              <p data-i18n="deliveryCutoffText">Если не успели оформить заказ до 08:00, доставка переносится на завтра — на это же время.</p>
+            </div>
+          </aside>
 
           <section class="service-strip">
             <article><strong data-i18n="payTitle">Оплата при получении</strong><span data-i18n="payText">Наличными при доставке.</span></article>
@@ -67,16 +75,16 @@
 
           <section class="section-head"><div><span class="eyebrow" data-i18n="catalogEyebrow">Каталог Балык</span><h2 data-i18n="catalogTitle">Выберите свежие продукты</h2></div><div class="sort-wrap"><label for="sortSelect" data-i18n="sort">Сортировка</label><select id="sortSelect"><option value="popular" data-i18n="sortPopular">Популярное</option><option value="priceAsc" data-i18n="sortCheap">Сначала дешевле</option><option value="priceDesc" data-i18n="sortExpensive">Сначала дороже</option><option value="name" data-i18n="sortName">По названию</option></select></div></section>
           <section class="catalog-layout">
-            <aside class="filters"><h3 data-i18n="categories">Категории</h3><div id="categoryFilters" class="filter-list"></div><div class="delivery-note"><strong data-i18n="schedule">График</strong><span data-i18n="scheduleHours">Пн-Сб · 10:00-13:00</span><span data-i18n="sunday">Вс - выходной</span></div></aside>
+            <aside class="filters"><h3 data-i18n="categories">Категории</h3><div id="categoryFilters" class="filter-list"></div></aside>
             <div><div class="results-bar"><strong id="resultsTitle">Рекомендуемые</strong><div class="results-tools"><button class="favorites-toggle" id="favoritesToggle" type="button" aria-pressed="false"><span id="favoritesToggleLabel">♡ Избранное</span><b id="favoritesCount">0</b></button><span id="resultsCount"></span></div></div><div class="product-grid sliding" id="productGrid"></div></div>
           </section>
         </section>
 
         <section class="view" id="view-cart" data-view="cart">
-          <div class="page-head"><span class="eyebrow" data-i18n="cart">Корзина</span><h1 data-i18n="cartTitle">Ваш заказ</h1><p data-i18n="cartText">Проверьте товары, затем перейдите к оформлению.</p></div>
-          <div class="commerce-layout"><div class="commerce-panel"><div id="cartItems" class="cart-items page-cart"></div></div><aside class="summary-panel"><span data-i18n="total">Итого</span><strong id="cartTotal">0 ₸</strong><button class="primary-button" id="startCheckout" type="button" data-i18n="checkoutBtn">Оформить заказ</button></aside></div>
+          <div class="page-head"><button class="back-link" type="button" data-back-view="catalog" data-i18n="backToCatalog">← Назад в каталог</button><span class="eyebrow" data-i18n="cart">Корзина</span><h1 data-i18n="cartTitle">Ваш заказ</h1><p data-i18n="cartText">Проверьте товары, затем перейдите к оформлению.</p></div>
+          <div class="commerce-layout"><div class="commerce-panel"><div id="cartItems" class="cart-items page-cart"></div></div><aside class="summary-panel"><span data-i18n="total">Итого</span><strong id="cartTotal">0 ₸</strong><p class="minimum-order-notice" id="minimumOrderNotice" role="status" aria-live="polite" hidden></p><button class="primary-button" id="startCheckout" type="button" data-i18n="checkoutBtn">Оформить заказ</button></aside></div>
           <section class="checkout-inline" id="checkoutInline">
-            <div class="page-head compact"><span class="eyebrow" data-i18n="checkout">Оформление</span><h2 data-i18n="checkoutTitle">Куда доставить заказ?</h2><p id="orderPreview"></p></div>
+            <div class="page-head compact"><button class="back-link" type="button" data-checkout-back data-i18n="backToCart">← Назад к корзине</button><span class="eyebrow" data-i18n="checkout">Оформление</span><h2 data-i18n="checkoutTitle">Куда доставить заказ?</h2><p id="orderPreview"></p></div>
             <form class="checkout-page" id="checkoutForm" novalidate>
               <div class="form-grid checkout-contact-fields" id="checkoutContactFields">
                 <label><span data-i18n="nameLabel">Имя</span><input name="name" autocomplete="name" minlength="2" required /></label>
@@ -99,7 +107,7 @@
         </section>
 
         <section class="view" id="view-profile" data-view="profile">
-          <div class="page-head"><span class="eyebrow" data-i18n="profile">Профиль</span><h1 data-i18n="profileTitle">Личный кабинет</h1><p data-i18n="profileText">Регистрация, вход, любимые товары и история заказов.</p></div>
+          <div class="page-head"><button class="back-link" type="button" data-back-view="catalog" data-i18n="backToCatalog">← Назад в каталог</button><span class="eyebrow" data-i18n="profile">Профиль</span><h1 data-i18n="profileTitle">Личный кабинет</h1><p data-i18n="profileText">Регистрация, вход, любимые товары и история заказов.</p></div>
           <div class="profile-layout">
             <form class="auth-card" id="authForm" novalidate>
               <h2 data-i18n="loginRegister">Вход / регистрация</h2>
@@ -155,6 +163,7 @@
 
         <section class="view" id="view-admin" data-view="admin">
           <div class="page-head">
+            <button class="back-link" type="button" data-back-view="catalog" data-i18n="backToCatalog">← Назад в каталог</button>
             <span class="eyebrow">Балык.kz</span>
             <h1>Панель администратора</h1>
             <p>Заказы магазина и зарегистрированные пользователи.</p>
@@ -178,14 +187,21 @@
         <section class="view" id="view-product" data-view="product"><div id="productPage"></div></section>
       </main>
       <footer class="site-footer">
-        <div class="site-footer-brand"><strong>Балык.kz</strong><span data-i18n="footerSchedule">Пн–Сб · 10:00–13:00 · Вс — выходной</span></div>
-        <a class="site-footer-phone" href="tel:+77172548253"><span data-i18n="footerCall">Остались вопросы? Позвоните нам</span><strong>+7 (7172) 54-82-53</strong><small data-i18n="autoAnswer">Автоответчик</small></a>
+        <div class="site-footer-brand"><strong>Балык.kz</strong><span data-i18n="footerSchedule">Пн–Сб · 08:00–14:00 · Вс — выходной</span></div>
+        <div class="site-footer-contacts">
+          <a class="site-footer-phone" href="tel:+77172548253"><span data-i18n="footerCall">Остались вопросы? Позвоните нам</span><strong>+7 (7172) 54-82-53</strong><small data-i18n="autoAnswer">Автоответчик</small></a>
+          <div class="site-footer-direct-contacts">
+            <strong data-i18n="footerContacts">Связь</strong>
+            <a href="tel:+77765208514">8 776 520 85 14</a>
+            <a href="tel:+77015208560">8 701 520 85 60</a>
+          </div>
+        </div>
         <span class="site-footer-note" data-i18n="footerDelivery">Доставка по Астане · оплата наличными при получении</span>
       </footer>
     </div>
 
     <template id="productTemplate"><article class="product-card"><button class="favorite" type="button">♡</button><button class="product-image" type="button"></button><div class="product-body"><span class="product-category"></span><h3></h3><p></p><div class="price-row"><strong></strong><span></span></div><div class="card-actions"><button class="details-button" type="button">Подробнее</button><button class="buy-button" type="button">В корзину</button></div></div></article></template>
-    <script src="./app.js?v=20261012-mobile-header3"></script>
-    <script src="./app-enhancements.js?v=20261010-profile-reset2"></script>
+    <script src="./app.js?v=20261017-release-readiness1"></script>
+    <script src="./app-enhancements.js?v=20261017-smoked-tuna1"></script>
   </body>
 </html>

@@ -26,6 +26,34 @@ test("seed catalog has 31 products and every local product photo exists", () => 
   });
 });
 
+test("catalog descriptions cover all 31 source products with matching variants", () => {
+  const seed = read("database/seed.sql");
+  const descriptionUpdates = seed.match(/UPDATE products AS product[\s\S]*?WHERE product\.name = catalog\.name;/)?.[0] || "";
+  const updatedProducts = descriptionUpdates.match(/^\s+\('/gm) || [];
+
+  assert.equal(updatedProducts.length, 31);
+  assert.match(descriptionUpdates, /'Филе судака без глазури'/);
+  assert.match(descriptionUpdates, /'Филе судака'/);
+  assert.match(descriptionUpdates, /'Окунь морской 0,3–0,5 кг'/);
+  assert.match(descriptionUpdates, /'Тунец холодного копчения'/);
+});
+
+test("checkout enforces the 15,000 tenge minimum and product details open at the top on mobile", () => {
+  const html = read("public/index.html");
+  const app = read("public/app-enhancements.js");
+  const database = read("db.js");
+  const styles = read("public/styles.css");
+
+  assert.match(html, /id="minimumOrderNotice"/);
+  assert.match(app, /checkoutButton\.disabled = total < 15000/);
+  assert.match(app, /if \(cartTotal\(\) < 15000\)/);
+  assert.match(app, /minimumOrderNotice: "Минимальная сумма заказа — 15 000 ₸/);
+  assert.match(database, /if \(total < 15000\) throw validationError\("Минимальная сумма заказа — 15 000 ₸"\)/);
+  assert.match(app, /window\.scrollTo\(0,\s*Math\.max\(0,\s*window\.scrollY \+ productView\.getBoundingClientRect\(\)\.top - 132\)\)/);
+  assert.match(styles, /\.page-head \.back-link:hover\s*\{[^}]*transform:\s*none/s);
+  assert.match(styles, /#view-product\s*\{\s*scroll-margin-top:\s*132px/s);
+});
+
 test("customer-provided photos are mapped to the requested catalog products", () => {
   const seed = read("database/seed.sql");
   const app = read("public/app.js");
@@ -110,19 +138,20 @@ test("product-card shine loops across the full card and respects reduced-motion 
   assert.match(styles, /@keyframes product-card-shine/);
   assert.match(styles, /\.product-card::after\s*\{[^}]*width:\s*45%;[^}]*animation:\s*product-card-shine\s+6s\s+ease-in-out\s+infinite/s);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.product-card::after\s*\{\s*animation:\s*none;/);
-  assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(210px,\s*260px\)\s*minmax\(0,\s*1fr\)/);
-  assert.match(html, /styles\.css\?v=20261012-mobile-header10/);
+  assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(190px,\s*240px\)\s*minmax\(140px,\s*1fr\)\s*auto\s*auto/);
+  assert.match(html, /styles\.css\?v=20261018-social-recipes1/);
 });
 
-test("mobile header keeps the cart visible and shows non-linked social icons", () => {
+test("mobile header keeps the cart visible and links WhatsApp to the requested chat", () => {
   const html = read("public/index.html");
   const styles = read("public/styles.css");
   const enhancements = read("public/app-enhancements.js");
   assert.match(html, /class="mobile-cart-link" href="#cart" data-view-link="cart"/);
   assert.match(html, /id="mobileCartCount"/);
-  assert.match(html, /class="mobile-social-icon" role="img" aria-label="Instagram"/);
-  assert.match(html, /class="mobile-social-icon" role="img" aria-label="WhatsApp"/);
+  assert.match(html, /<button class="mobile-social-icon" type="button" aria-label="Instagram" title="Instagram — скоро">/);
+  assert.match(html, /<a class="mobile-social-icon" href="https:\/\/wa\.me\/77765208514" aria-label="WhatsApp" title="Открыть чат WhatsApp" target="_blank" rel="noopener noreferrer">/);
   assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.topbar > \.mobile-quick-actions\s*\{[\s\S]*display:\s*flex/);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.topbar \.mobile-cart-link,\s*\.topbar \.mobile-menu-toggle\s*\{\s*display:\s*grid/);
   assert.match(enhancements, /byId\("mobileCartCount"\)\.textContent = cartCount/);
 });
 
@@ -143,10 +172,159 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /\.topbar \.header-actions\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/s);
   assert.match(styles, /\.topbar \.header-actions > a,\s*\.topbar \.header-actions \.logout-button\s*\{[^}]*border:\s*1px solid/s);
   assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
-  assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*none/s);
+  assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
-  assert.match(html, /app\.js\?v=20261012-mobile-header3/);
-  assert.match(app, /currentLanguage\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
+  assert.match(html, /app\.js\?v=20261017-release-readiness1/);
+  assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
+});
+
+test("seafood package images use supplied photos and catalog prices omit the 'from' prefix", () => {
+  const html = read("public/index.html");
+  const enhancements = read("public/app-enhancements.js");
+  const seed = read("database/seed.sql");
+
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "pink-salmon-caviar-500g-customer.png")));
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "pink-salmon-caviar-250g-customer.png")));
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "salmon-smoked-cut-customer.png")));
+  assert.match(seed, /'Икра горбуши 0\.5 кг'[\s\S]*?'\.\/images\/pink-salmon-caviar-500g-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Икра горбуши 0\.5 кг"[\s\S]*?pink-salmon-caviar-500g-customer\.png\?v=20261017-caviar3/);
+  assert.match(seed, /'Икра горбуши 250 г'[\s\S]*?'\.\/images\/pink-salmon-caviar-250g-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Икра горбуши 250 г"[\s\S]*?pink-salmon-caviar-250g-customer\.png\?v=20261017-caviar2/);
+  assert.match(seed, /'Сёмга Х\/К'[\s\S]*?'\.\/images\/salmon-smoked-cut-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Сёмга Х\/К"[\s\S]*?salmon-smoked-cut-customer\.png\?v=20261017-salmon1/);
+  assert.match(seed, /'Эсколар Х\/К'[\s\S]*?'\.\/images\/escolar-smoked-pack-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Эсколар Х\/К"[\s\S]*?escolar-smoked-pack-customer\.png\?v=20261017-escolar1/);
+  assert.match(seed, /'Эсколар Х\/К пласт'[\s\S]*?'\.\/images\/escolar-smoked-slab-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Эсколар Х\/К пласт"[\s\S]*?escolar-smoked-slab-customer\.png\?v=20261017-escolar-slab1/);
+  assert.match(seed, /'Форель слабосолёная'[\s\S]*?'\.\/images\/trout-lightly-salted-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Форель слабосолёная"[\s\S]*?trout-lightly-salted-customer\.png\?v=20261017-trout1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "zander-fillet-shared-customer.png")));
+  assert.match(enhancements, /filter\(\(product\) => product\.name === "Филе судака" \|\| product\.name === "Филе судака без глазури"\)[\s\S]*?zander-fillet-shared-customer\.png\?v=20261017-zander1/);
+  assert.match(seed, /'Креветки Elit'[\s\S]*?'\.\/images\/elite-shrimp-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Креветки Elit"[\s\S]*?shrimp-elit-customer-20261009\.png\?v=20261017-elit-shrimp1/);
+  assert.match(seed, /'Креветки очищенные Elit'[\s\S]*?'\.\/images\/elite-peeled-shrimp-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Креветки очищенные Elit"[\s\S]*?elite-peeled-shrimp-customer-20261010\.png\?v=20261017-peeled-elite-shrimp1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "gilthead-bream-by-weight-customer-20261017.png")));
+  assert.match(seed, /'Дорада развесная'[\s\S]*?gilthead-bream-by-weight-customer-20261010\.png/);
+  assert.match(enhancements, /product\.name === "Дорада развесная"[\s\S]*?gilthead-bream-by-weight-customer-20261017\.png\?v=20261017-gilthead-bream-weighted1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "trout-steaks-customer-20261017.png")));
+  assert.match(seed, /'Форель стейки'[\s\S]*?trout-steaks-customer-20261010\.png/);
+  assert.match(enhancements, /product\.name === "Форель стейки"[\s\S]*?trout-steaks-customer-20261017\.png\?v=20261017-trout-steaks1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "smoked-tuna-customer-20261017.png")));
+  assert.match(seed, /'Тунец холодного копчения'[\s\S]*?smoked-tuna-customer-20261010\.png/);
+  assert.match(enhancements, /product\.name === "Тунец холодного копчения"[\s\S]*?smoked-tuna-customer-20261017\.png\?v=20261017-smoked-tuna1/);
+  assert.match(seed, /'Сёмга стейки'[\s\S]*?'\.\/images\/salmon-steaks-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Сёмга стейки"[\s\S]*?salmon-steaks-customer-20261009\.png\?v=20261017-salmon-steaks1/);
+  assert.match(seed, /'Сёмга пласт'[\s\S]*?'\.\/images\/salmon-half-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Сёмга пласт"[\s\S]*?salmon-half-customer-20261009\.png\?v=20261017-frozen-salmon-slab1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "salmon-whole-sizes-customer.png")));
+  assert.match(enhancements, /filter\(\(product\) => \["Сёмга размер 5–6 кг", "Сёмга размер 6–7 кг", "Сёмга размер 7–8 кг"\]\.includes\(product\.name\)\)[\s\S]*?salmon-whole-sizes-customer\.png\?v=20261017-salmon-whole-sizes1/);
+  assert.match(seed, /'Форель морская 5–6 кг'[\s\S]*?'\.\/images\/sea-trout-size-5-6-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Форель морская 5–6 кг"[\s\S]*?sea-trout-size-5-6-customer-20261009\.png\?v=20261017-sea-trout1/);
+  assert.match(seed, /'Форель пласт'[\s\S]*?'\.\/images\/trout-half-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Форель пласт"[\s\S]*?trout-half-customer-20261009\.png\?v=20261017-frozen-trout-slab1/);
+  assert.match(seed, /'Форель целая'[\s\S]*?'\.\/images\/trout-whole-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Форель целая"[\s\S]*?trout-whole-customer-20261009\.png\?v=20261017-whole-trout1/);
+  assert.match(seed, /'Форель радужная'[\s\S]*?'\.\/images\/rainbow-trout-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Форель радужная"[\s\S]*?rainbow-trout-customer-20261010\.png\?v=20261017-rainbow-trout1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
+  assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
+  assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/salmon-smoked-slab-customer\.png'/);
+  assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?salmon-smoked-slab-customer\.png\?v=20261017-salmon-slab1/);
+  assert.match(seed, /'Тунец филе'[\s\S]*?'\.\/images\/tuna-fillet-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Тунец филе"[\s\S]*?tuna-fillet-customer-20261010\.png\?v=20261017-tuna-fillet1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "seabass-gutted-customer-20261010.png")));
+  assert.match(seed, /'Сибас'[\s\S]*?'\.\/images\/seabass-gutted-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Сибас"[\s\S]*?seabass-gutted-customer-20261010\.png\?v=20261017-seabass-gutted1/);
+  assert.match(seed, /'Сибас развесной'[\s\S]*?'\.\/images\/seabass-by-weight-customer-20261010\.png\?v=20261010-photo1'/);
+  assert.match(enhancements, /product\.name === "Сибас развесной"[\s\S]*?seabass-by-weight-customer-20261010\.png\?v=20261017-seabass-weighted1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "squid-fillet-customer-20261010.png")));
+  assert.match(seed, /'Филе кальмара'[\s\S]*?'\.\/images\/squid-fillet-customer-20261010\.png\?v=20261010-photo2'/);
+  assert.match(enhancements, /product\.name === "Филе кальмара"[\s\S]*?squid-fillet-customer-20261010\.png\?v=20261017-squid-fillet1/);
+  assert.ok(fs.existsSync(path.join(root, "public", "images", "beer-snack-customer-20261009.png")));
+  assert.match(seed, /'Пивной набор'[\s\S]*?'\.\/images\/beer-snack-customer-20261009\.png'/);
+  assert.match(enhancements, /product\.name === "Пивной набор"[\s\S]*?beer-snack-customer-20261009\.png\?v=20261017-beer-snack1/);
+  assert.match(enhancements, /product\?\.name === "Икра горбуши 0\.5 кг"[\s\S]*?backgroundPosition = "center 78%"/);
+  assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
+  assert.match(html, /app-enhancements\.js\?v=20261017-smoked-tuna1/);
+  assert.match(enhancements, /product\?\.name === "Филе судака" \|\| product\?\.name === "Филе судака без глазури"[\s\S]*?backgroundPosition = "center 78%"/);
+});
+
+test("search stays in the desktop header row and large social controls remain visible at every width", () => {
+  const html = read("public/index.html");
+  const styles = read("public/styles.css");
+  assert.match(styles, /grid-template-columns:\s*minmax\(220px,\s*300px\)\s*minmax\(180px,\s*1fr\)\s*auto\s*auto/);
+  assert.match(styles, /\.topbar\s*\{\s*grid-template-columns:\s*minmax\(220px,\s*300px\)\s*minmax\(180px,\s*1fr\)\s*auto\s*auto/s);
+  assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*grid-template-columns:\s*minmax\(190px,\s*240px\)\s*minmax\(140px,\s*1fr\)\s*auto\s*auto;[\s\S]*\.topbar > \.header-actions\s*\{[^}]*flex-wrap:\s*nowrap/s);
+  assert.match(styles, /@media \(min-width:\s*761px\) and \(max-width:\s*1100px\)\s*\{[\s\S]*grid-template-areas:[\s\S]*"navigation quick \.";[\s\S]*\.topbar > \.header-actions\s*\{[^}]*width:\s*max-content/s);
+  assert.match(styles, /@media \(min-width:\s*761px\) and \(max-width:\s*1100px\)\s*\{[\s\S]*\.topbar > \.mobile-quick-actions\s*\{\s*grid-area:\s*quick;[\s\S]*justify-content:\s*flex-start/s);
+  assert.match(styles, /\.mobile-social-icon\s*\{[^}]*width:\s*46px;[^}]*height:\s*46px/s);
+  assert.match(html, /id="mobileMenuToggle"/);
+  assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
+  assert.match(html, /mobile-social-icon" type="button" aria-label="Instagram"/);
+  assert.match(html, /mobile-social-icon" href="https:\/\/wa\.me\/77765208514" aria-label="WhatsApp"/);
+});
+
+test("social links are shown on desktop and recipes render as three responsive product cards", () => {
+  const html = read("public/index.html");
+  const styles = read("public/styles.css");
+  const enhancements = read("public/app-enhancements.js");
+
+  assert.match(html, /fonts\.googleapis\.com\/css2\?family=Manrope/);
+  assert.match(styles, /body\s*\{\s*font-family:\s*"Manrope",\s*"Noto Sans"/);
+  assert.match(styles, /\.topbar > \.mobile-quick-actions\s*\{\s*display:\s*flex/);
+  assert.match(styles, /@media \(min-width:\s*761px\) and \(max-width:\s*1100px\)\s*\{\s*\.topbar > \.mobile-quick-actions\s*\{\s*display:\s*flex/);
+  assert.match(enhancements, /function buildProductRecipes\(product\)/);
+  assert.match(enhancements, /byId\("productPage"\)\.append\(buildProductRecipes\(product\)\)/);
+  assert.match(enhancements, /const productRecipeSets = \{[\s\S]*caviar:[\s\S]*smoked:[\s\S]*shrimp:[\s\S]*squid:[\s\S]*snacks:[\s\S]*fish:/);
+  assert.match(styles, /\.product-recipe-grid\s*\{\s*display:\s*grid;\s*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.product-recipe-grid\s*\{\s*grid-template-columns:\s*minmax\(0,\s*1fr\)/);
+});
+
+test("view links reset scroll and mobile product cards align their prices and actions", () => {
+  const app = read("public/app.js");
+  const styles = read("public/styles.css");
+  assert.match(app, /location\.hash = view;[\s\S]*window\.scrollTo\(\{\s*top:\s*0,\s*behavior:\s*"instant"\s*\}\)/);
+  assert.match(app, /link\.addEventListener\("click", \(event\) => \{\s*event\.preventDefault\(\);\s*setView\(link\.dataset\.viewLink\)/);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.product-card\s*\{\s*display:\s*flex;[\s\S]*\.product-body\s*\{\s*display:\s*flex;[\s\S]*\.product-card p\s*\{\s*flex:\s*1;[\s\S]*\.price-row\s*\{[^}]*margin-top:\s*auto/s);
+});
+
+test("delivery hours and 08:00 order cutoff are prominent and not inside catalog filters", () => {
+  const html = read("public/index.html");
+  const app = read("public/app.js");
+  const enhancements = read("public/app-enhancements.js");
+  const styles = read("public/styles.css");
+  const filters = html.match(/<aside class="filters">[\s\S]*?<\/aside>/)?.[0] || "";
+
+  assert.match(html, /class="delivery-cutoff-notice"[\s\S]*data-i18n="deliveryHoursTitle"[\s\S]*data-i18n="deliveryCutoffText"/);
+  assert.doesNotMatch(filters, /delivery-note|data-i18n="schedule"/);
+  assert.doesNotMatch(app, /10:00|13:00/);
+  assert.match(enhancements, /deliveryHoursTitle: "Работаем с понедельника по субботу · 08:00–14:00"/);
+  assert.match(enhancements, /deliveryCutoffText: "Если не успели оформить заказ до 08:00, доставка переносится на завтра — на это же время\."/);
+  assert.match(enhancements, /footerSchedule: "Пн–Сб · 08:00–14:00/);
+  assert.match(enhancements, /deliveryHoursTitle: "Дүйсенбіден сенбіге дейін жұмыс істейміз · 08:00–14:00"/);
+  assert.match(enhancements, /deliveryHoursTitle: "Open Monday to Saturday · 08:00–14:00"/);
+  assert.match(styles, /\.delivery-cutoff-notice\s*\{[^}]*border-left:\s*6px solid/s);
+});
+
+test("product prices have no 'from' prefix and every secondary page has a clear return action", () => {
+  const html = read("public/index.html");
+  const enhancements = read("public/app-enhancements.js");
+
+  assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
+  assert.match(enhancements, /renderProducts = function \(\) \{[\s\S]*?card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
+
+  ["cart", "profile", "admin"].forEach((view) => {
+    assert.match(html, new RegExp(`<section class="view" id="view-${view}"[\\s\\S]*?data-back-view="catalog"`));
+  });
+  assert.match(html, /data-checkout-back[^>]*data-i18n="backToCart"/);
+  assert.match(enhancements, /querySelectorAll\("\[data-back-view\]"\)[\s\S]*setView\(button\.dataset\.backView\)/);
+  assert.match(enhancements, /querySelector\("\[data-checkout-back\]"\)\.addEventListener[\s\S]*classList\.remove\("open"\)/);
+  assert.match(enhancements, /backToCatalog: "← Назад в каталог"/);
+  assert.match(enhancements, /backToCatalog: "← Каталогқа оралу"/);
+  assert.match(enhancements, /backToCatalog: "← Back to catalog"/);
 });
 
 test("authenticated users without a phone get an empty personal order history", () => {
@@ -178,6 +356,18 @@ test("signed-in checkout uses account identity, structured delivery details, and
   assert.match(schema, /ALTER TABLE orders ADD COLUMN IF NOT EXISTS user_id BIGINT REFERENCES users\(id\)/);
   assert.match(html, /href="tel:\+77172548253"/);
   assert.match(html, /\+7 \(7172\) 54-82-53/);
+});
+
+test("footer shows both direct contact phone numbers as callable links", () => {
+  const html = read("public/index.html");
+  const enhancements = read("public/app-enhancements.js");
+  assert.match(html, /data-i18n="footerContacts">Связь<\/strong>/);
+  assert.match(html, /href="tel:\+77765208514">8 776 520 85 14<\/a>/);
+  assert.match(html, /href="tel:\+77015208560">8 701 520 85 60<\/a>/);
+  assert.match(html, /href="tel:\+77172548253"[\s\S]*data-i18n="autoAnswer">Автоответчик/);
+  assert.match(enhancements, /footerContacts: "Связь"/);
+  assert.match(enhancements, /footerContacts: "Байланыс"/);
+  assert.match(enhancements, /footerContacts: "Contact"/);
 });
 
 test("phone fields do not auto-insert a country code and accept complete Kazakhstan numbers", () => {
@@ -244,6 +434,30 @@ test("profile editing is authenticated and verifies the current password before 
   assert.match(database, /validKzPhone\(phoneInput\)/);
   assert.match(enhancements, /body: JSON\.stringify\(\{[\s\S]*currentPassword: data\.currentPassword/);
   assert.match(enhancements, /passwordResetForm/);
+});
+
+test("orders are copied to the configured mailbox and admin order items include catalog images", () => {
+  const server = read("server.js");
+  const database = read("db.js");
+  const enhancements = read("public/app-enhancements.js");
+  const styles = read("public/styles.css");
+  const compose = read("docker-compose.yml");
+  const readme = read("README.md");
+
+  assert.match(server, /process\.env\.ORDER_NOTIFICATION_EMAIL \|\| "87015240905@mail\.ru"/);
+  assert.match(server, /async function sendOrderNotificationEmail\(order\)/);
+  assert.match(server, /to: recipient,[\s\S]*subject: `Новый заказ №/);
+  assert.match(server, /Адрес доставки: \$\{order\.address\}/);
+  assert.match(server, /Order \$\{order\.id\} was saved, but email notification failed/);
+  assert.match(server, /notification = \{ sent: false, reason: "delivery_failed" \}/);
+  assert.match(database, /SELECT id, name, image_url, COALESCE\(package_price, price_per_kg\)/);
+  assert.match(database, /imageUrl: product\.image_url/);
+  assert.match(database, /'imageUrl', p\.image_url/);
+  assert.match(enhancements, /admin-order-product-image/);
+  assert.match(enhancements, /Копия на почту не отправлена/);
+  assert.match(styles, /\.admin-order-product-image/);
+  assert.match(compose, /ORDER_NOTIFICATION_EMAIL: \$\{ORDER_NOTIFICATION_EMAIL:-87015240905@mail\.ru\}/);
+  assert.match(readme, /87015240905@mail\.ru/);
 });
 
 test("personal order history shows translated status and line items and refreshes after checkout", () => {

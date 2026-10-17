@@ -139,6 +139,92 @@ function resetSecretConfigured() {
   return (process.env.PASSWORD_RESET_SECRET || "").length >= 32;
 }
 
+function orderMailConfigured() {
+  const username = process.env.SMTP_USER || "";
+  const password = process.env.SMTP_PASSWORD || "";
+  return Boolean(
+    process.env.SMTP_HOST &&
+    process.env.SMTP_FROM &&
+    Boolean(username) === Boolean(password)
+  );
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function formatOrderAmount(value) {
+  return `${Number(value || 0).toLocaleString("ru-RU")} ₸`;
+}
+
+async function sendOrderNotificationEmail(order) {
+  if (!orderMailConfigured()) {
+    console.warn("Order notification email is not configured; order was saved without email delivery.");
+    return { sent: false, reason: "not_configured" };
+  }
+
+  const port = Number(process.env.SMTP_PORT || 587);
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port,
+    secure: process.env.SMTP_SECURE === "true" || port === 465,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+    ...(process.env.SMTP_USER ? {
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD }
+    } : {})
+  });
+  const recipient = process.env.ORDER_NOTIFICATION_EMAIL || "87015240905@mail.ru";
+  const items = order.items.map((item) => {
+    const amount = item.grams ? `${Number(item.grams).toLocaleString("ru-RU")} г` : "—";
+    const total = item.isNegotiable ? "Цена уточняется" : formatOrderAmount(item.lineTotal);
+    return `${item.name} — ${amount} × ${item.qty}; ${total}`;
+  });
+  const rows = order.items.map((item) => (
+    `<tr><td style="padding:8px;border-bottom:1px solid #ddd">${escapeHtml(item.name)}</td>` +
+    `<td style="padding:8px;border-bottom:1px solid #ddd">${item.grams ? `${Number(item.grams).toLocaleString("ru-RU")} г` : "—"} × ${Number(item.qty)}</td>` +
+    `<td style="padding:8px;border-bottom:1px solid #ddd">${item.isNegotiable ? "Цена уточняется" : formatOrderAmount(item.lineTotal)}</td></tr>`
+  )).join("");
+  const details = [
+    `Заказ №${order.id}`,
+    `Имя: ${order.customerName}`,
+    `Телефон: ${order.phone}`,
+    `Email: ${order.email || "не указан"}`,
+    `Адрес доставки: ${order.address}`,
+    `Комментарий: ${order.comment || "нет"}`,
+    "",
+    "Состав заказа:",
+    ...items,
+    "",
+    `Итого: ${formatOrderAmount(order.total_amount)}`
+  ].join("\n");
+  const html = `<h2>Новый заказ №${escapeHtml(order.id)}</h2>` +
+    `<p><strong>Имя:</strong> ${escapeHtml(order.customerName)}<br>` +
+    `<strong>Телефон:</strong> ${escapeHtml(order.phone)}<br>` +
+    `<strong>Email:</strong> ${escapeHtml(order.email || "не указан")}<br>` +
+    `<strong>Адрес доставки:</strong> ${escapeHtml(order.address)}<br>` +
+    `<strong>Комментарий:</strong> ${escapeHtml(order.comment || "нет")}</p>` +
+    `<table style="border-collapse:collapse;text-align:left"><thead><tr><th style="padding:8px">Товар</th>` +
+    `<th style="padding:8px">Количество</th><th style="padding:8px">Сумма</th></tr></thead>` +
+    `<tbody>${rows}</tbody></table><p><strong>Итого: ${formatOrderAmount(order.total_amount)}</strong></p>`;
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: recipient,
+    subject: `Новый заказ №${order.id} — Балык.kz`,
+    text: details,
+    html
+  });
+  return { sent: true };
+}
+
 async function sendPasswordResetEmail(email, code) {
   const port = Number(process.env.SMTP_PORT || 587);
   const transporter = nodemailer.createTransport({
@@ -269,7 +355,15 @@ async function handleApi(req, res, url) {
       const payload = await readBody(req);
       const session = await currentSession(req);
       const order = await createOrder(payload, session);
-      sendJson(res, 201, { order });
+      let notification;
+      try {
+        notification = await sendOrderNotificationEmail(order);
+      } catch (error) {
+        console.error(`Order ${order.id} was saved, but email notification failed:`, error.code || error.message);
+        notification = { sent: false, reason: "delivery_failed" };
+      }
+      const { items, customerName, email, phone, address, comment, ...publicOrder } = order;
+      sendJson(res, 201, { order: publicOrder, notification });
       return true;
     }
 

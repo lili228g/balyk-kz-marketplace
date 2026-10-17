@@ -1,7 +1,12 @@
 const extraTranslations = {
   ru: {
     siteTitle: "Балык.kz — интернет-магазин морепродуктов",
-    scheduleHours: "Пн-Сб · 10:00-13:00",
+    backToCatalog: "← Назад в каталог",
+    backToCart: "← Назад к корзине",
+    minimumOrderNotice: "Минимальная сумма заказа — 15 000 ₸. Добавьте ещё {amount}.",
+    minimumOrderError: "Минимальная сумма заказа — 15 000 ₸.",
+    deliveryHoursTitle: "Работаем с понедельника по субботу · 08:00–14:00",
+    deliveryCutoffText: "Если не успели оформить заказ до 08:00, доставка переносится на завтра — на это же время.",
     checkoutNamePlaceholder: "Ваше имя",
     phonePlaceholder: "Введите номер целиком",
     phoneHint: "Казахстан: +7 7XX XXX XX XX или 8 7XX XXX XX XX.",
@@ -12,8 +17,9 @@ const extraTranslations = {
     apartmentLabel: "Квартира / офис",
     entranceLabel: "Подъезд / этаж",
     checkoutAccountNote: "Заказ оформляется для",
-    footerSchedule: "Пн–Сб · 10:00–13:00 · Вс — выходной",
+    footerSchedule: "Пн–Сб · 08:00–14:00 · Вс — выходной",
     footerCall: "Остались вопросы? Позвоните нам",
+    footerContacts: "Связь",
     autoAnswer: "Автоответчик",
     footerDelivery: "Доставка по Астане · оплата наличными при получении",
     orderAddressLabel: "Адрес доставки",
@@ -62,7 +68,12 @@ const extraTranslations = {
   },
   kk: {
     siteTitle: "Балык.kz — теңіз өнімдерінің интернет-дүкені",
-    scheduleHours: "Дс-Сб · 10:00-13:00",
+    backToCatalog: "← Каталогқа оралу",
+    backToCart: "← Себетке оралу",
+    minimumOrderNotice: "Тапсырыстың ең аз сомасы — 15 000 ₸. Тағы {amount} қосыңыз.",
+    minimumOrderError: "Тапсырыстың ең аз сомасы — 15 000 ₸.",
+    deliveryHoursTitle: "Дүйсенбіден сенбіге дейін жұмыс істейміз · 08:00–14:00",
+    deliveryCutoffText: "Тапсырысты 08:00-ге дейін рәсімдеп үлгермесеңіз, жеткізу ертең осы уақытта болады.",
     checkoutNamePlaceholder: "Атыңыз",
     phonePlaceholder: "Нөмірді толық енгізіңіз",
     phoneHint: "Қазақстан: +7 7XX XXX XX XX немесе 8 7XX XXX XX XX.",
@@ -73,8 +84,9 @@ const extraTranslations = {
     apartmentLabel: "Пәтер / кеңсе",
     entranceLabel: "Кіреберіс / қабат",
     checkoutAccountNote: "Тапсырыс алушы",
-    footerSchedule: "Дс–Сб · 10:00–13:00 · Жс — демалыс",
+    footerSchedule: "Дс–Сб · 08:00–14:00 · Жс — демалыс",
     footerCall: "Сұрақтарыңыз бар ма? Қоңырау шалыңыз",
+    footerContacts: "Байланыс",
     autoAnswer: "Автожауапбергіш",
     footerDelivery: "Астана бойынша жеткізу · алған кезде қолма-қол төлем",
     orderAddressLabel: "Жеткізу мекенжайы",
@@ -124,7 +136,12 @@ const extraTranslations = {
   },
   en: {
     siteTitle: "Balyk.kz — seafood online store",
-    scheduleHours: "Mon-Sat · 10:00-13:00",
+    backToCatalog: "← Back to catalog",
+    backToCart: "← Back to cart",
+    minimumOrderNotice: "The minimum order is ₸15,000. Add {amount} more.",
+    minimumOrderError: "The minimum order is ₸15,000.",
+    deliveryHoursTitle: "Open Monday to Saturday · 08:00–14:00",
+    deliveryCutoffText: "Orders placed after 08:00 are delivered tomorrow at the same time.",
     checkoutNamePlaceholder: "Your name",
     phonePlaceholder: "Enter the full phone number",
     phoneHint: "Kazakhstan: +7 7XX XXX XX XX or 8 7XX XXX XX XX.",
@@ -135,8 +152,9 @@ const extraTranslations = {
     apartmentLabel: "Apartment / office",
     entranceLabel: "Entrance / floor",
     checkoutAccountNote: "Order for",
-    footerSchedule: "Mon–Sat · 10:00–13:00 · Sun — closed",
+    footerSchedule: "Mon–Sat · 08:00–14:00 · Sun — closed",
     footerCall: "Questions? Give us a call",
+    footerContacts: "Contact",
     autoAnswer: "Automated answering service",
     footerDelivery: "Delivery in Astana · cash on delivery",
     orderAddressLabel: "Delivery address",
@@ -238,9 +256,8 @@ renderHeroProducts = function () {
   target.className = "hero-showcase";
   target.innerHTML = featured.map((product, index) => {
     const view = localizedProduct(product);
-    const from = state.lang === "en" ? "from" : state.lang === "kk" ? "бастап" : "от";
     const photoClass = index === 0 ? "large" : index === 1 ? "salmon" : "shrimp";
-    return `<button class="showcase-photo ${photoClass}" data-product-id="${product.id}" style="background-image:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.6)),url('${product.imageUrl}')"><span>${view.category}</span><strong>${view.name}</strong><small>${from} ${formatPrice(product.price)}</small></button>`;
+    return `<button class="showcase-photo ${photoClass}" data-product-id="${product.id}" style="background-image:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.6)),url('${product.imageUrl}')"><span>${view.category}</span><strong>${view.name}</strong><small>${formatPrice(product.price)}</small></button>`;
   }).join("");
   target.querySelectorAll("[data-product-id]").forEach((button) => {
     button.onclick = () => openProduct(Number(button.dataset.productId));
@@ -252,6 +269,16 @@ let currentProductId = null;
 const renderProductsWithoutFavoriteState = renderProducts;
 renderProducts = function () {
   renderProductsWithoutFavoriteState();
+  document.querySelectorAll("#productGrid .product-card").forEach((card) => {
+    const product = products.find((item) => localizedProduct(item).name === card.querySelector("h3")?.textContent);
+    if (product) card.querySelector(".price-row strong").textContent = formatPrice(product.price);
+    if (product?.name === "Икра горбуши 0.5 кг") {
+      card.querySelector(".product-image").style.backgroundPosition = "center 78%";
+    }
+    if (product?.name === "Филе судака" || product?.name === "Филе судака без глазури") {
+      card.querySelector(".product-image").style.backgroundPosition = "center 78%";
+    }
+  });
   const toggle = byId("favoritesToggle");
   if (toggle) {
     toggle.setAttribute("aria-pressed", String(state.favoritesOnly));
@@ -279,6 +306,74 @@ renderProducts = function () {
       renderProducts();
     };
   });
+};
+
+const renderWithUpdatedCaviarImage = render;
+render = function () {
+  const caviar = products.find((product) => product.name === "Икра горбуши 0.5 кг");
+  if (caviar) caviar.imageUrl = "./images/pink-salmon-caviar-500g-customer.png?v=20261017-caviar3";
+  const smallerCaviar = products.find((product) => product.name === "Икра горбуши 250 г");
+  if (smallerCaviar) smallerCaviar.imageUrl = "./images/pink-salmon-caviar-250g-customer.png?v=20261017-caviar2";
+  const smokedSalmon = products.find((product) => product.name === "Сёмга Х/К");
+  if (smokedSalmon) smokedSalmon.imageUrl = "./images/salmon-smoked-cut-customer.png?v=20261017-salmon1";
+  const escolar = products.find((product) => product.name === "Эсколар Х/К");
+  if (escolar) escolar.imageUrl = "./images/escolar-smoked-pack-customer.png?v=20261017-escolar1";
+  const escolarSlab = products.find((product) => product.name === "Эсколар Х/К пласт");
+  if (escolarSlab) escolarSlab.imageUrl = "./images/escolar-smoked-slab-customer.png?v=20261017-escolar-slab1";
+  const trout = products.find((product) => product.name === "Форель слабосолёная");
+  if (trout) trout.imageUrl = "./images/trout-lightly-salted-customer.png?v=20261017-trout1";
+  const salmonSteaks = products.find((product) => product.name === "Сёмга стейки");
+  if (salmonSteaks) salmonSteaks.imageUrl = "./images/salmon-steaks-customer-20261009.png?v=20261017-salmon-steaks1";
+  const frozenSalmonSlab = products.find((product) => product.name === "Сёмга пласт");
+  if (frozenSalmonSlab) frozenSalmonSlab.imageUrl = "./images/salmon-half-customer-20261009.png?v=20261017-frozen-salmon-slab1";
+  const seaTrout = products.find((product) => product.name === "Форель морская 5–6 кг");
+  if (seaTrout) seaTrout.imageUrl = "./images/sea-trout-size-5-6-customer-20261009.png?v=20261017-sea-trout1";
+  const frozenTroutSlab = products.find((product) => product.name === "Форель пласт");
+  if (frozenTroutSlab) frozenTroutSlab.imageUrl = "./images/trout-half-customer-20261009.png?v=20261017-frozen-trout-slab1";
+  const wholeTrout = products.find((product) => product.name === "Форель целая");
+  if (wholeTrout) wholeTrout.imageUrl = "./images/trout-whole-customer-20261009.png?v=20261017-whole-trout1";
+  const rainbowTrout = products.find((product) => product.name === "Форель радужная");
+  if (rainbowTrout) rainbowTrout.imageUrl = "./images/rainbow-trout-customer-20261010.png?v=20261017-rainbow-trout1";
+  products
+    .filter((product) => product.name === "Окунь морской" || product.name === "Окунь морской 0,3–0,5 кг")
+    .forEach((product) => {
+      product.imageUrl = "./images/sea-perch-shared-customer.png?v=20261017-sea-perch-shared1";
+    });
+  products
+    .filter((product) => ["Сёмга размер 5–6 кг", "Сёмга размер 6–7 кг", "Сёмга размер 7–8 кг"].includes(product.name))
+    .forEach((product) => {
+      product.imageUrl = "./images/salmon-whole-sizes-customer.png?v=20261017-salmon-whole-sizes1";
+    });
+  const smokedSalmonSlab = products.find((product) => product.name === "Сёмга Х/К пласт");
+  if (smokedSalmonSlab) smokedSalmonSlab.imageUrl = "./images/salmon-smoked-slab-customer.png?v=20261017-salmon-slab1";
+  const tunaFillet = products.find((product) => product.name === "Тунец филе");
+  if (tunaFillet) tunaFillet.imageUrl = "./images/tuna-fillet-customer-20261010.png?v=20261017-tuna-fillet1";
+  const beerSnack = products.find((product) => product.name === "Пивной набор");
+  if (beerSnack) beerSnack.imageUrl = "./images/beer-snack-customer-20261009.png?v=20261017-beer-snack1";
+  const hotSmokedEel = products.find((product) => product.name === "Угорь горячего копчения");
+  if (hotSmokedEel) hotSmokedEel.imageUrl = "./images/eel-hot-smoked-customer-20261009.png?v=20261017-eel-hot-smoked1";
+  const guttedSeabass = products.find((product) => product.name === "Сибас");
+  if (guttedSeabass) guttedSeabass.imageUrl = "./images/seabass-gutted-customer-20261010.png?v=20261017-seabass-gutted1";
+  const weighedSeabass = products.find((product) => product.name === "Сибас развесной");
+  if (weighedSeabass) weighedSeabass.imageUrl = "./images/seabass-by-weight-customer-20261010.png?v=20261017-seabass-weighted1";
+  const squidFillet = products.find((product) => product.name === "Филе кальмара");
+  if (squidFillet) squidFillet.imageUrl = "./images/squid-fillet-customer-20261010.png?v=20261017-squid-fillet1";
+  products
+    .filter((product) => product.name === "Филе судака" || product.name === "Филе судака без глазури")
+    .forEach((product) => {
+      product.imageUrl = "./images/zander-fillet-shared-customer.png?v=20261017-zander1";
+    });
+  const eliteShrimp = products.find((product) => product.name === "Креветки Elit");
+  if (eliteShrimp) eliteShrimp.imageUrl = "./images/shrimp-elit-customer-20261009.png?v=20261017-elit-shrimp1";
+  const peeledEliteShrimp = products.find((product) => product.name === "Креветки очищенные Elit");
+  if (peeledEliteShrimp) peeledEliteShrimp.imageUrl = "./images/elite-peeled-shrimp-customer-20261010.png?v=20261017-peeled-elite-shrimp1";
+  const weighedGiltheadBream = products.find((product) => product.name === "Дорада развесная");
+  if (weighedGiltheadBream) weighedGiltheadBream.imageUrl = "./images/gilthead-bream-by-weight-customer-20261017.png?v=20261017-gilthead-bream-weighted1";
+  const troutSteaks = products.find((product) => product.name === "Форель стейки");
+  if (troutSteaks) troutSteaks.imageUrl = "./images/trout-steaks-customer-20261017.png?v=20261017-trout-steaks1";
+  const coldSmokedTuna = products.find((product) => product.name === "Тунец холодного копчения");
+  if (coldSmokedTuna) coldSmokedTuna.imageUrl = "./images/smoked-tuna-customer-20261017.png?v=20261017-smoked-tuna1";
+  renderWithUpdatedCaviarImage();
 };
 
 byId("favoritesToggle").addEventListener("click", () => {
@@ -596,6 +691,7 @@ submitOrder = async function (event) {
   const signedIn = Boolean(state.profile?.id);
   clearCheckoutInvalid();
   const errors = [];
+  if (cartTotal() < 15000) errors.push({ field: null, message: t("minimumOrderError") });
   if (!signedIn) {
     if (String(data.name || "").trim().length < 2) errors.push({ field: "name", message: t("checkoutNameError") });
     if (!validEmail(data.email)) errors.push({ field: "email", message: t("checkoutEmailError") });
@@ -648,7 +744,17 @@ submitOrder = async function (event) {
     syncCheckoutAccount();
     setView("profile");
     await loadOrders();
-    alert(`${state.lang === "en" ? "Order" : state.lang === "kk" ? "Тапсырыс" : "Заказ"} №${result.order.id} ${state.lang === "en" ? "saved." : state.lang === "kk" ? "сақталды." : "сохранён."}`);
+    const orderSaved = state.lang === "en"
+      ? `Order №${result.order.id} saved.`
+      : state.lang === "kk" ? `№${result.order.id} тапсырыс сақталды.` : `Заказ №${result.order.id} сохранён.`;
+    const notificationFailed = result.notification?.sent === false
+      ? state.lang === "en"
+        ? " The email copy could not be sent; check SMTP settings."
+        : state.lang === "kk"
+          ? " Электрондық поштаға көшірме жіберілмеді; SMTP баптауларын тексеріңіз."
+          : " Копия на почту не отправлена; проверьте настройки SMTP."
+      : "";
+    alert(`${orderSaved}${notificationFailed}`);
   } catch (error) {
     alert(error.message);
   }
@@ -715,12 +821,276 @@ function portionOptions(product) {
   return choices.join("");
 }
 
+const productRecipeSets = {
+  caviar: [
+    {
+      title: "Блины с икрой и сметанным кремом",
+      time: "25 минут",
+      ingredients: ["Икра горбуши — 80 г", "Молоко — 250 мл", "Мука — 150 г", "Яйцо — 1 шт.", "Сметана — 120 г", "Сливочное масло — 20 г"],
+      steps: ["Смешайте молоко, яйцо и муку до однородного теста; испеките тонкие блины.", "Взбейте сметану с мягким сливочным маслом и щепоткой соли.", "Подавайте блины с кремом и икрой, добавляя икру уже перед подачей."],
+      source: "Идеи подачи икры · Great British Chefs",
+      url: "https://www.greatbritishchefs.com/collections/caviar-recipes"
+    },
+    {
+      title: "Картофельные драники с икрой",
+      time: "35 минут",
+      ingredients: ["Икра горбуши — 60 г", "Картофель — 500 г", "Яйцо — 1 шт.", "Мука — 1 ст. л.", "Сметана — 100 г", "Укроп — 10 г"],
+      steps: ["Натрите картофель, отожмите лишнюю жидкость и смешайте с яйцом и мукой.", "Обжарьте небольшие драники до золотистой корочки с обеих сторон.", "Добавьте сметану, укроп и немного икры на каждый драник."],
+      source: "Подборка рецептов с икрой · Great British Chefs",
+      url: "https://www.greatbritishchefs.com/collections/caviar-recipes"
+    },
+    {
+      title: "Тарталетки с икрой и авокадо",
+      time: "15 минут",
+      ingredients: ["Икра горбуши — 70 г", "Тарталетки — 10 шт.", "Авокадо — 1 шт.", "Сливочный сыр — 120 г", "Лимонный сок — 1 ч. л.", "Укроп — 5 г"],
+      steps: ["Разомните авокадо с лимонным соком и смешайте со сливочным сыром.", "Наполните тарталетки получившимся кремом.", "Перед подачей украсьте икрой и укропом."],
+      source: "Подборка рецептов с икрой · Great British Chefs",
+      url: "https://www.greatbritishchefs.com/collections/caviar-recipes"
+    }
+  ],
+  smoked: [
+    {
+      title: "Тёплая тарелка с копчёной рыбой и картофелем",
+      time: "30 минут",
+      ingredients: ["Копчёная рыба — 250 г", "Молодой картофель — 500 г", "Огурец — 1 шт.", "Йогурт — 100 г", "Лимон — ½ шт.", "Укроп — 10 г"],
+      steps: ["Отварите картофель до мягкости и слегка раздавите его вилкой.", "Смешайте йогурт, лимонный сок, укроп и чёрный перец.", "Подавайте картофель с ломтиками рыбы, огурцом и соусом."],
+      source: "Идеи блюд с копчёной рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/salmon-recipes"
+    },
+    {
+      title: "Салат с копчёной рыбой, яйцом и зеленью",
+      time: "20 минут",
+      ingredients: ["Копчёная рыба — 200 г", "Листья салата — 120 г", "Яйца — 2 шт.", "Огурец — 1 шт.", "Горчица — 1 ч. л.", "Оливковое масло — 2 ст. л."],
+      steps: ["Сварите яйца вкрутую и разрежьте на четвертинки.", "Смешайте горчицу с маслом и лимонным соком.", "Выложите салат, огурец и рыбу, полейте заправкой и добавьте яйца."],
+      source: "Подборка рецептов с рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/fish-recipes"
+    },
+    {
+      title: "Паста со сливочным соусом и копчёной рыбой",
+      time: "25 минут",
+      ingredients: ["Копчёная рыба — 180 г", "Паста — 250 г", "Сливки — 150 мл", "Шпинат — 80 г", "Лимон — ½ шт.", "Пармезан — 30 г"],
+      steps: ["Отварите пасту до состояния al dente, сохранив немного воды от варки.", "Прогрейте сливки со шпинатом и цедрой лимона, добавьте кусочки рыбы.", "Перемешайте соус с пастой, при необходимости добавьте ложку воды; подайте с пармезаном."],
+      source: "Подборка рецептов с лососем · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/salmon-recipes"
+    }
+  ],
+  shrimp: [
+    {
+      title: "Креветки с чесноком и лимоном",
+      time: "15 минут",
+      ingredients: ["Креветки — 400 г", "Чеснок — 3 зубчика", "Сливочное масло — 30 г", "Лимон — 1 шт.", "Петрушка — 10 г"],
+      steps: ["Разморозьте и обсушите креветки; очищенные креветки готовьте сразу.", "Растопите масло, быстро прогрейте чеснок и добавьте креветки.", "Обжарьте до готовности, сбрызните лимоном и посыпьте петрушкой."],
+      source: "Подборка рецептов с креветками · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/prawn-recipes"
+    },
+    {
+      title: "Рисовая миска с креветками и овощами",
+      time: "30 минут",
+      ingredients: ["Креветки — 300 г", "Рис — 180 г", "Болгарский перец — 1 шт.", "Огурец — 1 шт.", "Соевый соус — 2 ст. л.", "Кунжут — 1 ч. л."],
+      steps: ["Сварите рис и приготовьте креветки на сковороде до готовности.", "Нарежьте перец и огурец тонкими полосками.", "Разложите всё по мискам, добавьте соевый соус и кунжут."],
+      source: "Подборка блюд с морепродуктами · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    },
+    {
+      title: "Креветки в томатном соусе",
+      time: "25 минут",
+      ingredients: ["Креветки — 350 г", "Томаты в собственном соку — 300 г", "Чеснок — 2 зубчика", "Оливковое масло — 1 ст. л.", "Паприка — ½ ч. л.", "Зелень — 10 г"],
+      steps: ["Обжарьте чеснок с паприкой в оливковом масле.", "Добавьте томаты и тушите 10 минут до густого соуса.", "Положите креветки и готовьте до непрозрачности; подавайте с зеленью и хлебом."],
+      source: "Подборка рецептов с креветками · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/prawn-recipes"
+    }
+  ],
+  squid: [
+    {
+      title: "Кальмар с хрустящим салатом и лимоном",
+      time: "20 минут",
+      ingredients: ["Филе кальмара — 350 г", "Листья салата — 100 г", "Огурец — 1 шт.", "Лимон — 1 шт.", "Оливковое масло — 2 ст. л.", "Мука — 2 ст. л."],
+      steps: ["Разморозьте филе, обсушите и нарежьте полосками.", "Слегка обваляйте в муке и быстро обжарьте небольшими порциями.", "Подавайте сразу с салатом, лимоном и лёгкой масляной заправкой."],
+      source: "Подборка блюд с кальмарами · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    },
+    {
+      title: "Тёплый кальмар с чесноком и зеленью",
+      time: "15 минут",
+      ingredients: ["Филе кальмара — 400 г", "Чеснок — 2 зубчика", "Оливковое масло — 2 ст. л.", "Петрушка — 15 г", "Лимонный сок — 1 ст. л.", "Чёрный перец — по вкусу"],
+      steps: ["Нарежьте кальмар кольцами и хорошо обсушите.", "Разогрейте сковороду; обжарьте кальмар с чесноком короткими партиями.", "Снимите с огня, добавьте петрушку, лимонный сок и перец."],
+      source: "Подборка блюд с морепродуктами · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    },
+    {
+      title: "Кальмар с томатами и пастой",
+      time: "30 минут",
+      ingredients: ["Филе кальмара — 300 г", "Паста — 220 г", "Томаты — 250 г", "Чеснок — 2 зубчика", "Оливковое масло — 1 ст. л.", "Базилик — 10 г"],
+      steps: ["Отварите пасту по инструкции на упаковке.", "Приготовьте томатный соус с чесноком, затем добавьте кусочки кальмара.", "Прогрейте соус до готовности кальмара, перемешайте с пастой и добавьте базилик."],
+      source: "Подборка блюд с кальмарами · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    }
+  ],
+  snacks: [
+    {
+      title: "Рыбная закусочная тарелка с соусом",
+      time: "15 минут",
+      ingredients: ["Рыбный набор — 300 г", "Греческий йогурт — 120 г", "Лимон — ½ шт.", "Укроп — 10 г", "Огурец — 1 шт.", "Ржаной хлеб — 4 ломтика"],
+      steps: ["Смешайте йогурт с укропом, лимонным соком и щепоткой соли.", "Нарежьте огурец и хлеб, разложите рыбную закуску на тарелке.", "Подавайте с соусом и дольками лимона."],
+      source: "Идеи закусок с морепродуктами · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    },
+    {
+      title: "Мини-тосты с рыбной закуской",
+      time: "15 минут",
+      ingredients: ["Рыбный набор — 250 г", "Багет — 1 шт.", "Сливочный сыр — 100 г", "Огурец — ½ шт.", "Укроп — 5 г", "Лимонная цедра — ½ ч. л."],
+      steps: ["Нарежьте багет и подсушите ломтики на сухой сковороде.", "Смешайте сливочный сыр с укропом и лимонной цедрой.", "Нанесите сырный крем и добавьте небольшие кусочки рыбной закуски."],
+      source: "Подборка рецептов для закусок · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/seafood-recipes"
+    },
+    {
+      title: "Картофельные лодочки с рыбной начинкой",
+      time: "45 минут",
+      ingredients: ["Рыбный набор — 250 г", "Картофель — 4 шт.", "Сметана — 100 г", "Зелёный лук — 15 г", "Сыр — 50 г"],
+      steps: ["Запеките картофель целиком до мягкости и разрежьте вдоль.", "Аккуратно выньте часть мякоти и смешайте со сметаной и зелёным луком.", "Наполните лодочки начинкой, добавьте рыбную закуску и немного сыра; прогрейте 5 минут."],
+      source: "Рецепты с рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/fish-recipes"
+    }
+  ],
+  fish: [
+    {
+      title: "Рыба в духовке с лимоном и травами",
+      time: "35 минут",
+      ingredients: ["Морская рыба — 500 г", "Лимон — 1 шт.", "Оливковое масло — 1 ст. л.", "Тимьян — 4 веточки", "Картофель — 400 г", "Соль и перец — по вкусу"],
+      steps: ["Разморозьте рыбу в холодильнике и обсушите; при необходимости разделайте.", "Выложите рыбу и картофель в форму, добавьте масло, лимон, тимьян и приправы.", "Запекайте при 200 °C до готовности рыбы и мягкости картофеля."],
+      source: "Подборка рецептов с рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/fish-recipes"
+    },
+    {
+      title: "Нежная рыба в томатном соусе",
+      time: "30 минут",
+      ingredients: ["Филе белой рыбы — 450 г", "Томаты — 300 г", "Лук — 1 шт.", "Чеснок — 2 зубчика", "Оливковое масло — 1 ст. л.", "Петрушка — 10 г"],
+      steps: ["Обжарьте лук до мягкости, добавьте чеснок и томаты.", "Тушите соус 10 минут, затем выложите кусочки рыбы.", "Накройте крышкой и готовьте на слабом огне до готовности; посыпьте петрушкой."],
+      source: "Подборка рецептов с белой рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/white-fish-recipes"
+    },
+    {
+      title: "Рыбное филе с рисом и зеленью",
+      time: "30 минут",
+      ingredients: ["Рыбное филе — 400 г", "Рис — 180 г", "Огурец — 1 шт.", "Йогурт — 100 г", "Лимон — ½ шт.", "Укроп — 10 г"],
+      steps: ["Отварите рис и приготовьте филе на пару или в духовке до готовности.", "Смешайте йогурт с укропом и лимонным соком.", "Подайте рыбу с рисом, свежим огурцом и прохладным соусом."],
+      source: "Подборка рецептов с рыбой · BBC Good Food",
+      url: "https://www.bbcgoodfood.com/recipes/collection/fish-recipes"
+    }
+  ]
+};
+
+function recipeGroupForProduct(product) {
+  const category = String(product.category || "").toLowerCase();
+  const name = String(product.name || "").toLowerCase();
+  if (category.includes("икра")) return "caviar";
+  if (category.includes("закуск")) return "snacks";
+  if (name.includes("кальмар")) return "squid";
+  if (name.includes("кревет")) return "shrimp";
+  if (category.includes("копч") || category.includes("слабосол") || name.includes("угор")) return "smoked";
+  return "fish";
+}
+
+function buildProductRecipes(product) {
+  const group = productRecipeSets[recipeGroupForProduct(product)];
+  const section = document.createElement("section");
+  section.className = "product-recipes";
+
+  const heading = document.createElement("div");
+  heading.className = "product-recipes-heading";
+  const eyebrow = document.createElement("span");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent = state.lang === "en" ? "Cook something delicious" : state.lang === "kk" ? "Дәмді тағам дайындаңыз" : "Идеи для вашего стола";
+  const title = document.createElement("h2");
+  title.textContent = state.lang === "en" ? "Recipes with this product" : state.lang === "kk" ? "Осы өніммен рецепттер" : "Рецепты с этим продуктом";
+  const description = document.createElement("p");
+  description.textContent = state.lang === "en" ? "Three simple ways to enjoy your purchase." : state.lang === "kk" ? "Сатып алған өніміңізден үш дәмді тағам." : "Три простые идеи, чтобы вкусно приготовить выбранный продукт.";
+  heading.append(eyebrow, title, description);
+  section.append(heading);
+
+  const toggle = document.createElement("button");
+  toggle.className = "recipes-toggle";
+  toggle.type = "button";
+  toggle.setAttribute("aria-expanded", "false");
+  const toggleIcon = document.createElement("span");
+  toggleIcon.className = "recipes-toggle-icon";
+  toggleIcon.setAttribute("aria-hidden", "true");
+  toggleIcon.textContent = "✦";
+  const toggleLabel = document.createElement("span");
+  const showRecipesLabel = state.lang === "en" ? "Show 3 recipes" : state.lang === "kk" ? "3 рецептті көрсету" : "Показать 3 рецепта";
+  const hideRecipesLabel = state.lang === "en" ? "Hide recipes" : state.lang === "kk" ? "Рецепттерді жасыру" : "Скрыть рецепты";
+  toggleLabel.textContent = showRecipesLabel;
+  const toggleChevron = document.createElement("span");
+  toggleChevron.className = "recipes-toggle-chevron";
+  toggleChevron.setAttribute("aria-hidden", "true");
+  toggleChevron.textContent = "⌄";
+  toggle.append(toggleIcon, toggleLabel, toggleChevron);
+  const list = document.createElement("div");
+  list.className = "product-recipe-grid";
+  list.id = "productRecipeList";
+  list.hidden = true;
+  toggle.setAttribute("aria-controls", list.id);
+
+  group.forEach((recipe) => {
+    const card = document.createElement("article");
+    card.className = "product-recipe-card";
+    const cardHeader = document.createElement("div");
+    cardHeader.className = "product-recipe-header";
+    const cardTitle = document.createElement("h3");
+    cardTitle.textContent = recipe.title;
+    const time = document.createElement("span");
+    time.className = "recipe-time";
+    time.textContent = recipe.time;
+    cardHeader.append(cardTitle, time);
+
+    const productNote = document.createElement("p");
+    productNote.className = "recipe-product-note";
+    productNote.textContent = `${state.lang === "en" ? "Made with" : state.lang === "kk" ? "Құрамы" : "В рецепте"}: ${localizedProduct(product).name}`;
+
+    const ingredientsTitle = document.createElement("h4");
+    ingredientsTitle.textContent = state.lang === "en" ? "Ingredients" : state.lang === "kk" ? "Құрамы" : "Ингредиенты";
+    const ingredients = document.createElement("ul");
+    recipe.ingredients.forEach((ingredient) => {
+      const item = document.createElement("li");
+      item.textContent = ingredient;
+      ingredients.append(item);
+    });
+
+    const stepsTitle = document.createElement("h4");
+    stepsTitle.textContent = state.lang === "en" ? "Method" : state.lang === "kk" ? "Дайындау жолы" : "Приготовление";
+    const steps = document.createElement("ol");
+    recipe.steps.forEach((step) => {
+      const item = document.createElement("li");
+      item.textContent = step;
+      steps.append(item);
+    });
+
+    const source = document.createElement("a");
+    source.className = "recipe-source";
+    source.href = recipe.url;
+    source.target = "_blank";
+    source.rel = "noopener noreferrer";
+    source.textContent = `${state.lang === "en" ? "Inspiration" : state.lang === "kk" ? "Дереккөз" : "Источник"}: ${recipe.source}`;
+    card.append(cardHeader, productNote, ingredientsTitle, ingredients, stepsTitle, steps, source);
+    list.append(card);
+  });
+
+  toggle.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    list.hidden = expanded;
+    toggleLabel.textContent = expanded ? showRecipesLabel : hideRecipesLabel;
+    toggleChevron.textContent = expanded ? "⌄" : "⌃";
+  });
+  section.append(toggle, list);
+  return section;
+}
+
 openProduct = function (id) {
   const product = products.find((entry) => entry.id === Number(id));
   if (!product) return;
   currentProductId = product.id;
   const view = localizedProduct(product);
-  const from = state.lang === "en" ? "from" : state.lang === "kk" ? "бастап" : "от";
   const about = state.lang === "en" ? "About this product" : state.lang === "kk" ? "Өнім туралы" : "О товаре";
   const quantityLabel = t("portionLabel");
   remember(product);
@@ -734,7 +1104,7 @@ openProduct = function (id) {
         <span class="eyebrow">${view.category}</span>
         <h1>${view.name}</h1>
         <div class="detail-price">
-          <strong>${from} ${formatPrice(product.price)}</strong>
+          <strong>${formatPrice(product.price)}</strong>
           <span>${product.perUnit || localizedUnit(product.unit)}</span>
         </div>
         <section class="detail-info">
@@ -750,6 +1120,8 @@ openProduct = function (id) {
       </div>
     </div>`;
   setView("product");
+  const productView = byId("view-product");
+  window.scrollTo(0, Math.max(0, window.scrollY + productView.getBoundingClientRect().top - 132));
 
   const selection = byId("detailWeight");
   const total = byId("detailTotal");
@@ -776,6 +1148,7 @@ openProduct = function (id) {
     if (chosen === "negotiable") addToCart(product.id, weighted(product) ? 1000 : product.weightStep, 1, true);
     else addToCart(product.id, weighted(product) ? Number(chosen) : product.weightStep, weighted(product) ? 1 : Number(chosen));
   };
+  byId("productPage").append(buildProductRecipes(product));
 };
 
 addToCart = function (id, grams = null, quantity = 1, isNegotiable = false) {
@@ -854,8 +1227,16 @@ renderCart = function () {
   }, 0);
   byId("cartCount").textContent = cartCount;
   byId("mobileCartCount").textContent = cartCount;
-  byId("cartTotal").textContent = formatPrice(cartTotal());
-  byId("checkoutTotal").textContent = formatPrice(cartTotal());
+  const total = cartTotal();
+  byId("cartTotal").textContent = formatPrice(total);
+  byId("checkoutTotal").textContent = formatPrice(total);
+  const checkoutButton = byId("startCheckout");
+  const minimumOrderNotice = byId("minimumOrderNotice");
+  checkoutButton.disabled = total < 15000;
+  minimumOrderNotice.hidden = state.cart.length === 0 || total >= 15000;
+  minimumOrderNotice.textContent = minimumOrderNotice.hidden
+    ? ""
+    : t("minimumOrderNotice").replace("{amount}", formatPrice(15000 - total));
   renderCheckoutPreview();
   save();
 };
@@ -1363,10 +1744,29 @@ function renderAdminOrders(orders) {
     adminCell(row, adminLine(order.customerName, `Телефон: ${order.phone || "—"}`));
     adminCell(row, adminLine(order.email || "E-mail не указан", order.address));
     const itemText = (order.items || []).map((item) => {
-      const amount = item.isNegotiable ? "цена по согласованию" : `${Number(item.grams).toLocaleString("ru-RU")} г × ${item.quantity}`;
-      return `${item.name}: ${amount}`;
-    }).join("\n");
-    const itemCell = adminCell(row, itemText || "—");
+      const product = document.createElement("div");
+      product.className = "admin-order-product";
+      if (item.imageUrl) {
+        const image = document.createElement("img");
+        image.className = "admin-order-product-image";
+        image.src = item.imageUrl;
+        image.alt = item.name || "Товар";
+        image.loading = "lazy";
+        image.onerror = () => image.remove();
+        product.append(image);
+      }
+      const details = document.createElement("div");
+      const name = document.createElement("strong");
+      name.textContent = item.name || "Товар";
+      const amount = document.createElement("span");
+      amount.textContent = item.isNegotiable
+        ? "Цена по согласованию"
+        : `${Number(item.grams).toLocaleString("ru-RU")} г × ${item.quantity}`;
+      details.append(name, amount);
+      product.append(details);
+      return product;
+    });
+    const itemCell = adminCell(row, itemText.length ? itemText : "—");
     itemCell.className = "admin-order-items";
     adminCell(row, formatPrice(Number(order.total)));
 
@@ -1457,6 +1857,15 @@ document.querySelectorAll("#headerNavigation [data-view-link]").forEach((link) =
     byId("mobileMenuToggle").setAttribute("aria-label", "Открыть меню");
     if (link.dataset.viewLink === "admin" && state.profile?.role === "admin") selectAdminPanel("orders");
   });
+});
+
+document.querySelectorAll("[data-back-view]").forEach((button) => {
+  button.addEventListener("click", () => setView(button.dataset.backView));
+});
+
+byId("checkoutInline").querySelector("[data-checkout-back]").addEventListener("click", () => {
+  byId("checkoutInline").classList.remove("open");
+  byId("view-cart").querySelector(".commerce-layout").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
 document.querySelectorAll("[data-admin-tab]").forEach((button) => {

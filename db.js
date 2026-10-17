@@ -173,7 +173,7 @@ async function createOrder(payload, sessionUser = null) {
       throw validationError("Некорректный товар в корзине");
     }
     const productsResult = await client.query(
-      `SELECT id, COALESCE(package_price, price_per_kg) AS price, unit_label, COALESCE(package_grams, 1000) AS package_grams FROM products WHERE id = ANY($1::bigint[])`,
+      `SELECT id, name, image_url, COALESCE(package_price, price_per_kg) AS price, unit_label, COALESCE(package_grams, 1000) AS package_grams FROM products WHERE id = ANY($1::bigint[])`,
       [productIds]
     );
     const productsById = new Map(productsResult.rows.map((product) => [Number(product.id), product]));
@@ -196,8 +196,19 @@ async function createOrder(payload, sessionUser = null) {
       if (!isWeighted && grams !== baseGrams) throw validationError("Некорректный размер упаковки");
       const price = isNegotiable ? 0 : Number(product.price) * grams / baseGrams;
       total += price * qty;
-      return { productId: Number(item.id), grams, qty, price, isNegotiable };
+      return {
+        productId: Number(item.id),
+        name: product.name,
+        imageUrl: product.image_url,
+        grams,
+        qty,
+        price,
+        lineTotal: price * qty,
+        isNegotiable
+      };
     });
+
+    if (total < 15000) throw validationError("Минимальная сумма заказа — 15 000 ₸");
 
     const orderResult = await client.query(
       `INSERT INTO orders (user_id, customer_name, email, phone, address, comment, total_amount)
@@ -215,7 +226,15 @@ async function createOrder(payload, sessionUser = null) {
     }
 
     await client.query("COMMIT");
-    return orderResult.rows[0];
+    return {
+      ...orderResult.rows[0],
+      customerName: name,
+      email,
+      phone,
+      address,
+      comment,
+      items: prepared
+    };
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;
@@ -439,6 +458,7 @@ async function getAdminOrders() {
       COALESCE(
         json_agg(json_build_object(
           'name', p.name,
+          'imageUrl', p.image_url,
           'quantity', oi.quantity,
           'grams', oi.grams,
           'price', oi.price_snapshot,
