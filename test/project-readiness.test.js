@@ -315,6 +315,7 @@ test("Instagram link, caviar package copy, and mobile prices stay consistent", (
   const app = read("public/app.js");
   const enhancements = read("public/app-enhancements.js");
   const seed = read("database/seed.sql");
+  const descriptionUpdates = seed.match(/UPDATE products AS product[\s\S]*?WHERE product\.name = catalog\.name;/)?.[0] || "";
   const styles = read("public/styles.css");
 
   assert.match(html, /href="https:\/\/www\.instagram\.com\/balyk\.kz01\/"/);
@@ -323,6 +324,8 @@ test("Instagram link, caviar package copy, and mobile prices stay consistent", (
   assert.match(app, /name: "Икра горбуши 250 г"[^}]*description: "Зернистая икра горбуши дальневосточного вылова\."[^}]*details: "Банка 250 г\."/);
   assert.match(seed, /'Икра горбуши 0\.5 кг', 'Зернистая икра горбуши дальневосточного вылова\.', 'Банка 500 г\.'/);
   assert.match(seed, /'Икра горбуши 250 г', 'Зернистая икра горбуши дальневосточного вылова\.', 'Банка 250 г\.'/);
+  assert.match(descriptionUpdates, /\('Икра горбуши 0\.5 кг', 'Зернистая икра горбуши дальневосточного вылова\.'\)/);
+  assert.match(descriptionUpdates, /\('Икра горбуши 250 г', 'Зернистая икра горбуши дальневосточного вылова\.'\)/);
   assert.match(styles, /\.price-row strong\s*\{[^}]*white-space:\s*nowrap/s);
   assert.match(styles, /\.checkout-total strong\s*\{[^}]*white-space:\s*nowrap/s);
   assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.price-row strong\s*\{[^}]*font-size:\s*clamp\(17px,\s*5vw,\s*22px\)/);
