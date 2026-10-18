@@ -139,7 +139,7 @@ test("product-card shine loops across the full card and respects reduced-motion 
   assert.match(styles, /\.product-card::after\s*\{[^}]*width:\s*45%;[^}]*animation:\s*product-card-shine\s+6s\s+ease-in-out\s+infinite/s);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.product-card::after\s*\{\s*animation:\s*none;/);
   assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(190px,\s*240px\)\s*minmax\(140px,\s*1fr\)\s*auto\s*auto/);
-  assert.match(html, /styles\.css\?v=20261018-social-recipes1/);
+  assert.match(html, /styles\.css\?v=20261018-instagram-schedule-caviar-prices1/);
 });
 
 test("mobile header keeps the cart visible and links WhatsApp to the requested chat", () => {
@@ -148,7 +148,7 @@ test("mobile header keeps the cart visible and links WhatsApp to the requested c
   const enhancements = read("public/app-enhancements.js");
   assert.match(html, /class="mobile-cart-link" href="#cart" data-view-link="cart"/);
   assert.match(html, /id="mobileCartCount"/);
-  assert.match(html, /<button class="mobile-social-icon" type="button" aria-label="Instagram" title="Instagram — скоро">/);
+  assert.match(html, /<a class="mobile-social-icon" href="https:\/\/www\.instagram\.com\/balyk\.kz01\/" aria-label="Instagram" title="Открыть Instagram" target="_blank" rel="noopener noreferrer">/);
   assert.match(html, /<a class="mobile-social-icon" href="https:\/\/wa\.me\/77765208514" aria-label="WhatsApp" title="Открыть чат WhatsApp" target="_blank" rel="noopener noreferrer">/);
   assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.topbar > \.mobile-quick-actions\s*\{[\s\S]*display:\s*flex/);
   assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.topbar \.mobile-cart-link,\s*\.topbar \.mobile-menu-toggle\s*\{\s*display:\s*grid/);
@@ -174,7 +174,7 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
-  assert.match(html, /app\.js\?v=20261017-release-readiness1/);
+  assert.match(html, /app\.js\?v=20261018-instagram-schedule-caviar-prices1/);
   assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });
 
@@ -229,8 +229,8 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Форель радужная"[\s\S]*?rainbow-trout-customer-20261010\.png\?v=20261017-rainbow-trout1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
   assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/salmon-smoked-slab-customer\.png'/);
   assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?salmon-smoked-slab-customer\.png\?v=20261017-salmon-slab1/);
   assert.match(seed, /'Тунец филе'[\s\S]*?'\.\/images\/tuna-fillet-customer-20261010\.png\?v=20261010-photo1'/);
@@ -248,7 +248,7 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Пивной набор"[\s\S]*?beer-snack-customer-20261009\.png\?v=20261017-beer-snack1/);
   assert.match(enhancements, /product\?\.name === "Икра горбуши 0\.5 кг"[\s\S]*?backgroundPosition = "center 78%"/);
   assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
-  assert.match(html, /app-enhancements\.js\?v=20261017-order-confirmation1/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
   assert.match(enhancements, /product\?\.name === "Филе судака" \|\| product\?\.name === "Филе судака без глазури"[\s\S]*?backgroundPosition = "center 78%"/);
 });
 
@@ -263,7 +263,7 @@ test("search stays in the desktop header row and large social controls remain vi
   assert.match(styles, /\.mobile-social-icon\s*\{[^}]*width:\s*46px;[^}]*height:\s*46px/s);
   assert.match(html, /id="mobileMenuToggle"/);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
-  assert.match(html, /mobile-social-icon" type="button" aria-label="Instagram"/);
+  assert.match(html, /mobile-social-icon" href="https:\/\/www\.instagram\.com\/balyk\.kz01\/" aria-label="Instagram"/);
   assert.match(html, /mobile-social-icon" href="https:\/\/wa\.me\/77765208514" aria-label="WhatsApp"/);
 });
 
@@ -291,7 +291,7 @@ test("view links reset scroll and mobile product cards align their prices and ac
   assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.product-card\s*\{\s*display:\s*flex;[\s\S]*\.product-body\s*\{\s*display:\s*flex;[\s\S]*\.product-card p\s*\{\s*flex:\s*1;[\s\S]*\.price-row\s*\{[^}]*margin-top:\s*auto/s);
 });
 
-test("delivery hours and 08:00 order cutoff are prominent and not inside catalog filters", () => {
+test("delivery hours and 09:00 order cutoff are prominent and not inside catalog filters", () => {
   const html = read("public/index.html");
   const app = read("public/app.js");
   const enhancements = read("public/app-enhancements.js");
@@ -301,12 +301,31 @@ test("delivery hours and 08:00 order cutoff are prominent and not inside catalog
   assert.match(html, /class="delivery-cutoff-notice"[\s\S]*data-i18n="deliveryHoursTitle"[\s\S]*data-i18n="deliveryCutoffText"/);
   assert.doesNotMatch(filters, /delivery-note|data-i18n="schedule"/);
   assert.doesNotMatch(app, /10:00|13:00/);
-  assert.match(enhancements, /deliveryHoursTitle: "Работаем с понедельника по субботу · 08:00–14:00"/);
-  assert.match(enhancements, /deliveryCutoffText: "Если не успели оформить заказ до 08:00, доставка переносится на завтра — на это же время\."/);
-  assert.match(enhancements, /footerSchedule: "Пн–Сб · 08:00–14:00/);
-  assert.match(enhancements, /deliveryHoursTitle: "Дүйсенбіден сенбіге дейін жұмыс істейміз · 08:00–14:00"/);
-  assert.match(enhancements, /deliveryHoursTitle: "Open Monday to Saturday · 08:00–14:00"/);
+  assert.match(enhancements, /deliveryHoursTitle: "Работаем с понедельника по субботу · 09:00–14:00"/);
+  assert.match(enhancements, /deliveryCutoffText: "Если не успели оформить заказ до 09:00, доставка переносится на завтра — на это же время\."/);
+  assert.match(enhancements, /footerSchedule: "Пн–Сб · 09:00–14:00/);
+  assert.match(enhancements, /deliveryHoursTitle: "Дүйсенбіден сенбіге дейін жұмыс істейміз · 09:00–14:00"/);
+  assert.match(enhancements, /deliveryHoursTitle: "Open Monday to Saturday · 09:00–14:00"/);
+  assert.doesNotMatch(`${html}\n${enhancements}`, /08:00|08:00-ге дейін/);
   assert.match(styles, /\.delivery-cutoff-notice\s*\{[^}]*border-left:\s*6px solid/s);
+});
+
+test("Instagram link, caviar package copy, and mobile prices stay consistent", () => {
+  const html = read("public/index.html");
+  const app = read("public/app.js");
+  const enhancements = read("public/app-enhancements.js");
+  const seed = read("database/seed.sql");
+  const styles = read("public/styles.css");
+
+  assert.match(html, /href="https:\/\/www\.instagram\.com\/balyk\.kz01\/"/);
+  assert.doesNotMatch(`${html}\n${app}\n${enhancements}`, /доставкой утром|delivered in the morning|таңертең жеткізіледі/);
+  assert.match(app, /name: "Икра горбуши 0\.5 кг"[^}]*description: "Зернистая икра горбуши дальневосточного вылова\."[^}]*details: "Банка 500 г\."/);
+  assert.match(app, /name: "Икра горбуши 250 г"[^}]*description: "Зернистая икра горбуши дальневосточного вылова\."[^}]*details: "Банка 250 г\."/);
+  assert.match(seed, /'Икра горбуши 0\.5 кг', 'Зернистая икра горбуши дальневосточного вылова\.', 'Банка 500 г\.'/);
+  assert.match(seed, /'Икра горбуши 250 г', 'Зернистая икра горбуши дальневосточного вылова\.', 'Банка 250 г\.'/);
+  assert.match(styles, /\.price-row strong\s*\{[^}]*white-space:\s*nowrap/s);
+  assert.match(styles, /\.checkout-total strong\s*\{[^}]*white-space:\s*nowrap/s);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.price-row strong\s*\{[^}]*font-size:\s*clamp\(17px,\s*5vw,\s*22px\)/);
 });
 
 test("product prices have no 'from' prefix and every secondary page has a clear return action", () => {

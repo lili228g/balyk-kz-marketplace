@@ -636,6 +636,7 @@ select {
 
 .price-row strong {
   font-size: 24px;
+  white-space: nowrap;
 }
 
 .price-row span {
@@ -845,6 +846,7 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   padding: 16px;
   border-radius: 16px;
   background: var(--surface-strong);
@@ -852,6 +854,7 @@ select {
 
 .checkout-total strong {
   font-size: 24px;
+  white-space: nowrap;
 }
 
 .overlay {
@@ -4114,6 +4117,16 @@ main#catalog {
     align-items: baseline;
     gap: 4px 10px;
     margin-top: auto;
+  }
+
+  .price-row strong {
+    max-width: 100%;
+    font-size: clamp(17px, 5vw, 22px);
+  }
+
+  .checkout-total strong {
+    flex-shrink: 0;
+    font-size: clamp(18px, 5vw, 24px);
   }
 
   .card-actions {

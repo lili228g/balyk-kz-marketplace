@@ -11,7 +11,7 @@ ON CONFLICT (slug) DO UPDATE SET
   description = EXCLUDED.description;
 
 INSERT INTO products (category_id, name, description, details, price_per_kg, package_price, package_grams, unit_label, badge, color, image_url) VALUES
-  ((SELECT id FROM categories WHERE slug = 'ikra'), 'Икра горбуши 0.5 кг', 'Зернистая икра горбуши дальневосточного вылова.', 'Упаковка 500 г.', 70000, 35000, 500, 'упаковка 500 г', 'Хит', '#e85d3f', './images/pink-salmon-caviar-500g-customer.png'),
+  ((SELECT id FROM categories WHERE slug = 'ikra'), 'Икра горбуши 0.5 кг', 'Зернистая икра горбуши дальневосточного вылова.', 'Банка 500 г.', 70000, 35000, 500, 'банка 500 г', 'Хит', '#e85d3f', './images/pink-salmon-caviar-500g-customer.png'),
   ((SELECT id FROM categories WHERE slug = 'ikra'), 'Икра горбуши 250 г', 'Зернистая икра горбуши дальневосточного вылова.', 'Банка 250 г.', 70000, 17500, 250, 'банка 250 г', 'Популярно', '#f0784a', './images/pink-salmon-caviar-250g-customer.png'),
   ((SELECT id FROM categories WHERE slug = 'holodnoe-kopchenie'), 'Сёмга Х/К', 'Сёмга холодного копчения. Фасовка 0,6–1,3 кг.', '9 500 ₸/кг. Ориентир за упаковку — 12 450 ₸; итог зависит от фактического веса.', 9500, 12450, 1300, 'упаковка 0,6–1,3 кг', 'Копчение', '#ff9f43', './images/salmon-smoked-cut-customer.png'),
   ((SELECT id FROM categories WHERE slug = 'holodnoe-kopchenie'), 'Эсколар Х/К', 'Эсколар холодного копчения. Фасовка 0,6–1,2 кг.', '7 800 ₸/кг. Ориентир за упаковку — 9 360 ₸; итог зависит от фактического веса.', 7800, 9360, 1200, 'упаковка 0,6–1,2 кг', 'Копчение', '#4f8a8b', './images/escolar-smoked-pack-customer.png'),
