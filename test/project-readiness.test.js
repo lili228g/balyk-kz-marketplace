@@ -61,8 +61,8 @@ test("customer-provided photos are mapped to the requested catalog products", ()
     "pink-salmon-caviar-500g-customer.png",
     "pink-salmon-caviar-250g-customer.png",
     "salmon-smoked-cut-customer.png",
+    "smoked-salmon-slab-customer-20261018.png",
     "escolar-smoked-pack-customer.png",
-    "salmon-smoked-slab-customer.png",
     "trout-lightly-salted-customer.png",
     "escolar-smoked-slab-customer.png",
     "elite-shrimp-customer-20261010.png",
@@ -174,7 +174,7 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
-  assert.match(html, /app\.js\?v=20261018-instagram-schedule-caviar-prices1/);
+  assert.match(html, /app\.js\?v=20261018-salmon-smoked-slab2/);
   assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });
 
@@ -229,10 +229,12 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Форель радужная"[\s\S]*?rainbow-trout-customer-20261010\.png\?v=20261017-rainbow-trout1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
-  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
-  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
-  assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/salmon-smoked-slab-customer\.png'/);
-  assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?salmon-smoked-slab-customer\.png\?v=20261017-salmon-slab1/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-salmon-smoked-slab2/);
+  assert.match(html, /app\.js\?v=20261018-salmon-smoked-slab2/);
+  assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/smoked-salmon-slab-customer-20261018\.png'/);
+  assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?smoked-salmon-slab-customer-20261018\.png\?v=20261018-salmon-slab2/);
+  assert.match(seed, /'Сёмга Х\/К'[\s\S]*?'\.\/images\/salmon-smoked-cut-customer\.png'/);
+  assert.match(seed, /'Сёмга пласт'[\s\S]*?'\.\/images\/salmon-half-customer-20261009\.png'/);
   assert.match(seed, /'Тунец филе'[\s\S]*?'\.\/images\/tuna-fillet-customer-20261010\.png\?v=20261010-photo1'/);
   assert.match(enhancements, /product\.name === "Тунец филе"[\s\S]*?tuna-fillet-customer-20261010\.png\?v=20261017-tuna-fillet1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "seabass-gutted-customer-20261010.png")));
@@ -248,7 +250,7 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Пивной набор"[\s\S]*?beer-snack-customer-20261009\.png\?v=20261017-beer-snack1/);
   assert.match(enhancements, /product\?\.name === "Икра горбуши 0\.5 кг"[\s\S]*?backgroundPosition = "center 78%"/);
   assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
-  assert.match(html, /app-enhancements\.js\?v=20261018-instagram-schedule-caviar-prices1/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-salmon-smoked-slab2/);
   assert.match(enhancements, /product\?\.name === "Филе судака" \|\| product\?\.name === "Филе судака без глазури"[\s\S]*?backgroundPosition = "center 78%"/);
 });
 

@@ -345,7 +345,7 @@ render = function () {
       product.imageUrl = "./images/salmon-whole-sizes-customer.png?v=20261017-salmon-whole-sizes1";
     });
   const smokedSalmonSlab = products.find((product) => product.name === "Сёмга Х/К пласт");
-  if (smokedSalmonSlab) smokedSalmonSlab.imageUrl = "./images/salmon-smoked-slab-customer.png?v=20261017-salmon-slab1";
+  if (smokedSalmonSlab) smokedSalmonSlab.imageUrl = "./images/smoked-salmon-slab-customer-20261018.png?v=20261018-salmon-slab2";
   const tunaFillet = products.find((product) => product.name === "Тунец филе");
   if (tunaFillet) tunaFillet.imageUrl = "./images/tuna-fillet-customer-20261010.png?v=20261017-tuna-fillet1";
   const beerSnack = products.find((product) => product.name === "Пивной набор");
