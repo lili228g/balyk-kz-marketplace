@@ -73,7 +73,7 @@ test("customer-provided photos are mapped to the requested catalog products", ()
     "salmon-size-5-6-customer-20261009.png",
     "salmon-size-6-7-customer-20261009.png",
     "salmon-size-7-8-customer-20261009.png",
-    "sea-trout-size-5-6-customer-20261009.png",
+    "sea-trout-customer-20261018.png",
     "rainbow-trout-customer-20261010.png",
     "seabass-gutted-customer-20261010.png",
     "seabass-by-weight-customer-20261010.png",
@@ -174,7 +174,7 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
-  assert.match(html, /app\.js\?v=20261018-salmon-smoked-slab2/);
+  assert.match(html, /app\.js\?v=20261018-sea-trout2/);
   assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });
 
@@ -219,8 +219,8 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Сёмга пласт"[\s\S]*?salmon-half-customer-20261009\.png\?v=20261017-frozen-salmon-slab1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "salmon-whole-sizes-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => \["Сёмга размер 5–6 кг", "Сёмга размер 6–7 кг", "Сёмга размер 7–8 кг"\]\.includes\(product\.name\)\)[\s\S]*?salmon-whole-sizes-customer\.png\?v=20261017-salmon-whole-sizes1/);
-  assert.match(seed, /'Форель морская 5–6 кг'[\s\S]*?'\.\/images\/sea-trout-size-5-6-customer-20261009\.png'/);
-  assert.match(enhancements, /product\.name === "Форель морская 5–6 кг"[\s\S]*?sea-trout-size-5-6-customer-20261009\.png\?v=20261017-sea-trout1/);
+  assert.match(seed, /'Форель морская 5–6 кг'[\s\S]*?'\.\/images\/sea-trout-customer-20261018\.png'/);
+  assert.match(enhancements, /product\.name === "Форель морская 5–6 кг"[\s\S]*?sea-trout-customer-20261018\.png\?v=20261018-sea-trout2/);
   assert.match(seed, /'Форель пласт'[\s\S]*?'\.\/images\/trout-half-customer-20261009\.png'/);
   assert.match(enhancements, /product\.name === "Форель пласт"[\s\S]*?trout-half-customer-20261009\.png\?v=20261017-frozen-trout-slab1/);
   assert.match(seed, /'Форель целая'[\s\S]*?'\.\/images\/trout-whole-customer-20261009\.png'/);
@@ -229,12 +229,14 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Форель радужная"[\s\S]*?rainbow-trout-customer-20261010\.png\?v=20261017-rainbow-trout1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
-  assert.match(html, /app-enhancements\.js\?v=20261018-salmon-smoked-slab2/);
-  assert.match(html, /app\.js\?v=20261018-salmon-smoked-slab2/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-sea-trout2/);
+  assert.match(html, /app\.js\?v=20261018-sea-trout2/);
   assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/smoked-salmon-slab-customer-20261018\.png'/);
   assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?smoked-salmon-slab-customer-20261018\.png\?v=20261018-salmon-slab2/);
   assert.match(seed, /'Сёмга Х\/К'[\s\S]*?'\.\/images\/salmon-smoked-cut-customer\.png'/);
   assert.match(seed, /'Сёмга пласт'[\s\S]*?'\.\/images\/salmon-half-customer-20261009\.png'/);
+  assert.match(seed, /'Форель морская 5–6 кг'[\s\S]*?'\.\/images\/sea-trout-customer-20261018\.png'/);
+  assert.match(seed, /'Форель целая'[\s\S]*?'\.\/images\/trout-whole-customer-20261009\.png'/);
   assert.match(seed, /'Тунец филе'[\s\S]*?'\.\/images\/tuna-fillet-customer-20261010\.png\?v=20261010-photo1'/);
   assert.match(enhancements, /product\.name === "Тунец филе"[\s\S]*?tuna-fillet-customer-20261010\.png\?v=20261017-tuna-fillet1/);
   assert.ok(fs.existsSync(path.join(root, "public", "images", "seabass-gutted-customer-20261010.png")));
@@ -250,7 +252,7 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.match(enhancements, /product\.name === "Пивной набор"[\s\S]*?beer-snack-customer-20261009\.png\?v=20261017-beer-snack1/);
   assert.match(enhancements, /product\?\.name === "Икра горбуши 0\.5 кг"[\s\S]*?backgroundPosition = "center 78%"/);
   assert.match(enhancements, /card\.querySelector\("\.price-row strong"\)\.textContent = formatPrice\(product\.price\)/);
-  assert.match(html, /app-enhancements\.js\?v=20261018-salmon-smoked-slab2/);
+  assert.match(html, /app-enhancements\.js\?v=20261018-sea-trout2/);
   assert.match(enhancements, /product\?\.name === "Филе судака" \|\| product\?\.name === "Филе судака без глазури"[\s\S]*?backgroundPosition = "center 78%"/);
 });
 

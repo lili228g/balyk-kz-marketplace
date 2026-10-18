@@ -327,7 +327,7 @@ render = function () {
   const frozenSalmonSlab = products.find((product) => product.name === "Сёмга пласт");
   if (frozenSalmonSlab) frozenSalmonSlab.imageUrl = "./images/salmon-half-customer-20261009.png?v=20261017-frozen-salmon-slab1";
   const seaTrout = products.find((product) => product.name === "Форель морская 5–6 кг");
-  if (seaTrout) seaTrout.imageUrl = "./images/sea-trout-size-5-6-customer-20261009.png?v=20261017-sea-trout1";
+  if (seaTrout) seaTrout.imageUrl = "./images/sea-trout-customer-20261018.png?v=20261018-sea-trout2";
   const frozenTroutSlab = products.find((product) => product.name === "Форель пласт");
   if (frozenTroutSlab) frozenTroutSlab.imageUrl = "./images/trout-half-customer-20261009.png?v=20261017-frozen-trout-slab1";
   const wholeTrout = products.find((product) => product.name === "Форель целая");
