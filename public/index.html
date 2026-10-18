@@ -74,7 +74,7 @@
           </section>
 
           <section class="section-head"><div><span class="eyebrow" data-i18n="catalogEyebrow">Каталог Балык</span><h2 data-i18n="catalogTitle">Выберите свежие продукты</h2></div><div class="sort-wrap"><label for="sortSelect" data-i18n="sort">Сортировка</label><select id="sortSelect"><option value="popular" data-i18n="sortPopular">Популярное</option><option value="priceAsc" data-i18n="sortCheap">Сначала дешевле</option><option value="priceDesc" data-i18n="sortExpensive">Сначала дороже</option><option value="name" data-i18n="sortName">По названию</option></select></div></section>
-          <section class="catalog-layout">
+          <section class="catalog-layout" id="productCatalog">
             <aside class="filters"><h3 data-i18n="categories">Категории</h3><div id="categoryFilters" class="filter-list"></div></aside>
             <div><div class="results-bar"><strong id="resultsTitle">Рекомендуемые</strong><div class="results-tools"><button class="favorites-toggle" id="favoritesToggle" type="button" aria-pressed="false"><span id="favoritesToggleLabel">♡ Избранное</span><b id="favoritesCount">0</b></button><span id="resultsCount"></span></div></div><div class="product-grid sliding" id="productGrid"></div></div>
           </section>
@@ -201,7 +201,7 @@
     </div>
 
     <template id="productTemplate"><article class="product-card"><button class="favorite" type="button">♡</button><button class="product-image" type="button"></button><div class="product-body"><span class="product-category"></span><h3></h3><p></p><div class="price-row"><strong></strong><span></span></div><div class="card-actions"><button class="details-button" type="button">Подробнее</button><button class="buy-button" type="button">В корзину</button></div></div></article></template>
-    <script src="./app.js?v=20261018-sea-trout2"></script>
+    <script src="./app.js?v=20261018-catalog-scroll1"></script>
     <script src="./app-enhancements.js?v=20261018-sea-trout2"></script>
   </body>
 </html>

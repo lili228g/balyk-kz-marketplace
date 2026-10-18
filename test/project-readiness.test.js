@@ -54,6 +54,15 @@ test("checkout enforces the 15,000 tenge minimum and product details open at the
   assert.match(styles, /#view-product\s*\{\s*scroll-margin-top:\s*132px/s);
 });
 
+test("hero catalog button scrolls directly to the products section", () => {
+  const html = read("public/index.html");
+  const app = read("public/app.js");
+
+  assert.match(html, /<a class="primary-link" href="#catalog" data-i18n="goCatalog">/);
+  assert.match(html, /<section class="catalog-layout" id="productCatalog">/);
+  assert.match(app, /querySelector\('\[data-i18n="goCatalog"\]'\)\?\.addEventListener\("click", \(event\) => \{[\s\S]*event\.preventDefault\(\);[\s\S]*byId\("productCatalog"\)\?\.scrollIntoView\(\{ behavior: "smooth", block: "start" \}\)/);
+});
+
 test("customer-provided photos are mapped to the requested catalog products", () => {
   const seed = read("database/seed.sql");
   const app = read("public/app.js");
@@ -177,7 +186,7 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /@keyframes slideProduct \{ from \{ opacity: 0; transform: translateY\(18px\); \} to \{ opacity: 1; transform: translateY\(0\); \} \}/);
   assert.match(styles, /\.service-strip::before\s*\{[^}]*content:\s*"\\0412\\0430\\0436\\043D\\044B\\0435\\000020\\0443\\0441\\043B\\043E\\0432\\0438\\044F\\000020\\0437\\0430\\043A\\0430\\0437\\0430"/s);
   assert.match(html, /styles\.css\?v=20261018-css-utf8-pill1/);
-  assert.match(html, /app\.js\?v=20261018-sea-trout2/);
+  assert.match(html, /app\.js\?v=20261018-catalog-scroll1/);
   assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });
 
@@ -233,7 +242,7 @@ test("seafood package images use supplied photos and catalog prices omit the 'fr
   assert.ok(fs.existsSync(path.join(root, "public", "images", "sea-perch-shared-customer.png")));
   assert.match(enhancements, /filter\(\(product\) => product\.name === "Окунь морской" \|\| product\.name === "Окунь морской 0,3–0,5 кг"\)[\s\S]*?sea-perch-shared-customer\.png\?v=20261017-sea-perch-shared1/);
   assert.match(html, /app-enhancements\.js\?v=20261018-sea-trout2/);
-  assert.match(html, /app\.js\?v=20261018-sea-trout2/);
+  assert.match(html, /app\.js\?v=20261018-catalog-scroll1/);
   assert.match(seed, /'Сёмга Х\/К пласт'[\s\S]*?'\.\/images\/smoked-salmon-slab-customer-20261018\.png'/);
   assert.match(enhancements, /product\.name === "Сёмга Х\/К пласт"[\s\S]*?smoked-salmon-slab-customer-20261018\.png\?v=20261018-salmon-slab2/);
   assert.match(seed, /'Сёмга Х\/К'[\s\S]*?'\.\/images\/salmon-smoked-cut-customer\.png'/);
