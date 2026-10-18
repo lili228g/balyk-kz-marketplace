@@ -148,7 +148,7 @@ test("product-card shine loops across the full card and respects reduced-motion 
   assert.match(styles, /\.product-card::after\s*\{[^}]*width:\s*45%;[^}]*animation:\s*product-card-shine\s+6s\s+ease-in-out\s+infinite/s);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.product-card::after\s*\{\s*animation:\s*none;/);
   assert.match(styles, /@media \(min-width:\s*1101px\) and \(max-width:\s*1360px\)\s*\{[\s\S]*\.topbar\s*\{[\s\S]*grid-template-columns:\s*minmax\(190px,\s*240px\)\s*minmax\(140px,\s*1fr\)\s*auto\s*auto/);
-  assert.match(html, /styles\.css\?v=20261018-css-utf8-pill1/);
+  assert.match(html, /styles\.css\?v=20261018-mobile-language1/);
 });
 
 test("mobile header keeps the cart visible and links WhatsApp to the requested chat", () => {
@@ -181,11 +181,12 @@ test("mobile navigation has visible button surfaces and a compact inline languag
   assert.match(styles, /\.topbar \.header-actions\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/s);
   assert.match(styles, /\.topbar \.header-actions > a,\s*\.topbar \.header-actions \.logout-button\s*\{[^}]*border:\s*1px solid/s);
   assert.match(styles, /\.topbar \.language-options\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+  assert.match(styles, /@media \(max-width:\s*760px\)\s*\{\s*\.topbar \.header-actions \.language-current > span\s*\{\s*display:\s*none/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.topbar \.mobile-social-links\s*\{\s*display:\s*flex/s);
   assert.match(styles, /@media \(max-width:\s*380px\)\s*\{[\s\S]*\.hero h1\s*\{\s*font-size:\s*clamp\(29px,\s*9vw,\s*34px\)/s);
   assert.match(styles, /@keyframes slideProduct \{ from \{ opacity: 0; transform: translateY\(18px\); \} to \{ opacity: 1; transform: translateY\(0\); \} \}/);
   assert.match(styles, /\.service-strip::before\s*\{[^}]*content:\s*"\\0412\\0430\\0436\\043D\\044B\\0435\\000020\\0443\\0441\\043B\\043E\\0432\\0438\\044F\\000020\\0437\\0430\\043A\\0430\\0437\\0430"/s);
-  assert.match(html, /styles\.css\?v=20261018-css-utf8-pill1/);
+  assert.match(html, /styles\.css\?v=20261018-mobile-language1/);
   assert.match(html, /app\.js\?v=20261018-catalog-scroll1/);
   assert.match(app, /byId\("languageCurrent"\)\.setAttribute\("aria-label", language\.querySelector\("span"\)\.textContent\)/);
 });

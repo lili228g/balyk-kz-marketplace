@@ -3945,6 +3945,10 @@ main#catalog {
 }
 
 @media (max-width: 760px) {
+  .topbar .header-actions .language-current > span {
+    display: none;
+  }
+
   .topbar {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "brand menu" "search search" "navigation navigation";
